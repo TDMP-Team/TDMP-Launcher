@@ -5,16 +5,16 @@ namespace TeardownMultiplayerLauncher.Core
 {
     internal class PathUtility
     {
-        public string TeardownDirectory { get; set; } = string.Empty;
+        public string TeardownExePath { get; set; } = string.Empty;
 
-        public string GetTeardownExePath()
+        public string GetTeardownDirectory()
         {
-            return Path.Join(TeardownDirectory, "teardown.exe");
+            return Path.GetDirectoryName(TeardownExePath);
         }
 
         public string GetTeardownMultiplayerDllPath()
         {
-            return Path.Join(TeardownDirectory, "TDMP.dll");
+            return Path.Join(GetTeardownDirectory(), "TDMP.dll");
         }
     }
 }

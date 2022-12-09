@@ -1,7 +1,7 @@
-﻿using Ookii.Dialogs.Wpf;
-using System;
+﻿using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media;
 using TeardownMultiplayerLauncher.Core;
 
@@ -27,7 +27,7 @@ namespace TeardownMultiplayerLauncher
             {
                 true => "TEARDOWN VERSION SUPPORTED",
                 false => "TEARDOWN VERSION UNSUPPORTED",
-                null => "SELECT YOUR TEARDOWN FOLDER",
+                null => "SELECT YOUR TEARDOWN.EXE",
             };
             _versionSupportLabel.Background = isGameVersionSupported switch
             {
@@ -41,14 +41,14 @@ namespace TeardownMultiplayerLauncher
 
         private void _teardownFolderBrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new VistaFolderBrowserDialog();
-            dialog.Description = "Please select your Teardown folder";
-            dialog.UseDescriptionForTitle = true;
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Please select your teardown.exe";
+            dialog.Filter = "teardown.exe|";
 
-            if (dialog.ShowDialog(this) == true)
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                _core.SetTeardownFolderPath(dialog.SelectedPath);
-                _teardownFolderTextBox.Content = dialog.SelectedPath;
+                _core.SetTeardownExePath(dialog.FileName);
+                _teardownFolderTextBox.Content = dialog.FileName;
                 UpdateForm();
             }
         }
@@ -58,7 +58,7 @@ namespace TeardownMultiplayerLauncher
             new Thread(() => {
                 if (!_core.LaunchTeardownMultiplayer())
                 {
-                    MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }).Start();
         }

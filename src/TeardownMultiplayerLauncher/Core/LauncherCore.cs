@@ -1,7 +1,4 @@
-﻿using Process.NET.Native.Types;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 
 namespace TeardownMultiplayerLauncher.Core
@@ -17,10 +14,10 @@ namespace TeardownMultiplayerLauncher.Core
             _gameVersionUtility = new GameVersionUtility(_pathUtility);
         }
 
-        public void SetTeardownFolderPath(string path)
+        public void SetTeardownExePath(string path)
         {
             var trimmedPath = path.Trim();
-            _pathUtility.TeardownDirectory = trimmedPath;
+            _pathUtility.TeardownExePath = trimmedPath;
         }
 
         public bool? HasSupportedTeardownVersion()
@@ -43,7 +40,7 @@ namespace TeardownMultiplayerLauncher.Core
 
         private System.Diagnostics.Process LaunchTeardown()
         {
-            return System.Diagnostics.Process.Start(_pathUtility.GetTeardownExePath());
+            return System.Diagnostics.Process.Start(_pathUtility.TeardownExePath);
         }
 
         private bool InjectTeardownMultiplayer(System.Diagnostics.Process teardownProcess)

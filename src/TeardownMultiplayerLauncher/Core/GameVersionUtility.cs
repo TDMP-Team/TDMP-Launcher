@@ -18,7 +18,7 @@ namespace TeardownMultiplayerLauncher
 
         public string? GetTeardownMd5Hash()
         {
-            var teardownExePath = _pathUtility.GetTeardownExePath();
+            var teardownExePath = _pathUtility.TeardownExePath;
 
             if (!File.Exists(teardownExePath))
             {
