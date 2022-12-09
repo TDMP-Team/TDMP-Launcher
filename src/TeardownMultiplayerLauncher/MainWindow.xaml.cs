@@ -1,10 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
-using TeardownMultiplayerLauncher.Core;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace TeardownMultiplayerLauncher
 {
