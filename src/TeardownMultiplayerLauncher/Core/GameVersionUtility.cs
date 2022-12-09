@@ -9,9 +9,9 @@ namespace TeardownMultiplayerLauncher
     {
         public static readonly string SupportedTeardownMd5Hash = "004fb1bf0e06ba9bf2d8eb8d3dc2e142";
 
-        private readonly PathUtility _pathUtility;
+        private readonly TeardownPathUtility _pathUtility;
 
-        public GameVersionUtility(PathUtility pathUtility)
+        public GameVersionUtility(TeardownPathUtility pathUtility)
         {
             this._pathUtility = pathUtility;
         }

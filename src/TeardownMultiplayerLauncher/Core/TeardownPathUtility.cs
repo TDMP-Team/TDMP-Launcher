@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using System.Reflection;
 
 namespace TeardownMultiplayerLauncher.Core
 {
-    internal class PathUtility
+    internal class TeardownPathUtility
     {
         public string TeardownExePath { get; set; } = string.Empty;
 

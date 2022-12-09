@@ -3,35 +3,15 @@ using System.Threading;
 
 namespace TeardownMultiplayerLauncher.Core
 {
-    internal class LauncherCore
+    internal class Launcher
     {
-        private readonly GameVersionUtility _gameVersionUtility;
-        private readonly PathUtility _pathUtility;
+        private readonly TeardownPathUtility _pathUtility;
         private readonly DllInjectionUtility _dllInjectionUtility;
 
-        public LauncherCore()
+        public Launcher(TeardownPathUtility pathUtility, DllInjectionUtility dllInjectionUtility)
         {
-            _pathUtility = new PathUtility();
-            _gameVersionUtility = new GameVersionUtility(_pathUtility);
-            _dllInjectionUtility = new DllInjectionUtility();
-        }
-
-        public void SetTeardownExePath(string path)
-        {
-            var trimmedPath = path.Trim();
-            _pathUtility.TeardownExePath = trimmedPath;
-        }
-
-        public bool? HasSupportedTeardownVersion()
-        {
-            return _gameVersionUtility.HasSupportedTeardownVersion();
-        }
-
-        public string GetLauncherVersion()
-        {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
-            return fileVersionInfo.FileVersion;
+            _pathUtility = pathUtility;
+            _dllInjectionUtility = dllInjectionUtility;
         }
 
         public bool LaunchTeardownMultiplayer()

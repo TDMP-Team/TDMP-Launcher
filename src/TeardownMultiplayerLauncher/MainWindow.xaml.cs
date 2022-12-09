@@ -12,7 +12,7 @@ namespace TeardownMultiplayerLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly LauncherCore _core = new LauncherCore();
+        private readonly Core.Core _core = new Core.Core();
 
         public MainWindow()
         {
