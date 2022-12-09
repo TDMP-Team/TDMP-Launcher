@@ -14,10 +14,10 @@
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Teardown Multiplayer" Width="640" Height="500" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico">
+        Title="Teardown Multiplayer" Width="640" Height="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico">
     <Grid>
         <Grid Height="150" VerticalAlignment="Top">
-            <Image gif:ImageBehavior.AnimatedSource="Resources/TDMP.gif" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image gif:ImageBehavior.AnimatedSource="Resources/TDMP.gif" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Label Content="TDMP" Margin="0,0,0,0" FontSize="75" FontWeight="Bold" Foreground="#FFFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label.Effect>
                     <DropShadowEffect Direction="270" RenderingBias="Quality" ShadowDepth="2" BlurRadius="5" Opacity="1"/>
@@ -27,7 +27,7 @@
 
         <materialDesign:Card Margin="20,170,20,20" Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
             <Grid>
-                <Label x:Name="_versionSupportLabel" Content="SELECT YOUR TEARDOWN.EXE" HorizontalAlignment="Right" Width="235" Height="24" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFA9A300"/>
+                <Label x:Name="_versionSupportLabel" Content="SELECT YOUR TEARDOWN.EXE" HorizontalAlignment="Right" Width="200" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFA9A300" FontSize="10"/>
                 <StackPanel Margin="10,10,10,80">
                     <Label Content="TEARDOWN.EXE PATH" FontWeight="Bold" Padding="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" >
@@ -38,5 +38,6 @@
                 <Button x:Name="_playButton" Content="PLAY" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="35" Height="50" Margin="0,0,0,25" Click="_playButton_Click" IsEnabled="False"/>
             </Grid>
         </materialDesign:Card>
+        <Label x:Name="_launcherVersionLabel" Content="TDMP Launcher vx.x.x.x" Margin="320,0,0,0" Foreground="{DynamicResource MaterialDesignCardBackground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="5,5,20.7,5" Height="20" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

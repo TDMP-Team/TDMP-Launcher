@@ -7,11 +7,13 @@ namespace TeardownMultiplayerLauncher.Core
     {
         private readonly GameVersionUtility _gameVersionUtility;
         private readonly PathUtility _pathUtility;
+        private readonly DllInjectionUtility _dllInjectionUtility;
 
         public LauncherCore()
         {
             _pathUtility = new PathUtility();
             _gameVersionUtility = new GameVersionUtility(_pathUtility);
+            _dllInjectionUtility = new DllInjectionUtility();
         }
 
         public void SetTeardownExePath(string path)
@@ -25,6 +27,12 @@ namespace TeardownMultiplayerLauncher.Core
             return _gameVersionUtility.HasSupportedTeardownVersion();
         }
 
+        public string GetLauncherVersion()
+        {
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fileVersionInfo.FileVersion;
+        }
 
         public bool LaunchTeardownMultiplayer()
         {
@@ -47,9 +55,7 @@ namespace TeardownMultiplayerLauncher.Core
         {
             try
             {
-                var processSharp = new Process.NET.ProcessSharp(teardownProcess);
-                processSharp.ModuleFactory.Inject(_pathUtility.GetTeardownMultiplayerDllPath(), false);
-                return true;
+                return _dllInjectionUtility.InjectDLL(_pathUtility.GetTeardownMultiplayerDllPath(), teardownProcess);
             }
             catch
             {

@@ -17,6 +17,12 @@ namespace TeardownMultiplayerLauncher
         public MainWindow()
         {
             InitializeComponent();
+            InitializeLauncherVersionLabel();
+        }
+
+        private void InitializeLauncherVersionLabel()
+        {
+            _launcherVersionLabel.Content = $"TDMP Launcher v{_core.GetLauncherVersion()}";
         }
 
         private void UpdateForm()
