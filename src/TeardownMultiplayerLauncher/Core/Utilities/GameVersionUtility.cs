@@ -1,25 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using TeardownMultiplayerLauncher.Core;
 
-namespace TeardownMultiplayerLauncher
+namespace TeardownMultiplayerLauncher.Core.Utilities
 {
-    internal class GameVersionUtility
+    internal static class GameVersionUtility
     {
-        public static readonly string SupportedTeardownMd5Hash = "004fb1bf0e06ba9bf2d8eb8d3dc2e142";
+        public static readonly string SupportedTeardownMd5Hash = "004fb1bf0e06ba9bf2d8eb8d3dc2e142"; // TODO: make configurable or retrieved at runtime
 
-        private readonly TeardownPathUtility _pathUtility;
-
-        public GameVersionUtility(TeardownPathUtility pathUtility)
+        public static string? GetTeardownMd5Hash(string teardownExePath)
         {
-            this._pathUtility = pathUtility;
-        }
-
-        public string? GetTeardownMd5Hash()
-        {
-            var teardownExePath = _pathUtility.TeardownExePath;
-
             if (!File.Exists(teardownExePath))
             {
                 return null;
@@ -34,9 +24,9 @@ namespace TeardownMultiplayerLauncher
             }
         }
 
-        public bool? HasSupportedTeardownVersion()
+        public static bool? HasSupportedTeardownVersion(string teardownExePath)
         {
-            var teardownExeMd5Hash = GetTeardownMd5Hash();
+            var teardownExeMd5Hash = GetTeardownMd5Hash(teardownExePath);
             if (teardownExeMd5Hash == null) // Check if md5 hash can't be calculated, likely due to bad file path.
             {
                 return null;

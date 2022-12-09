@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
+using TeardownMultiplayerLauncher.Core;
 
 namespace TeardownMultiplayerLauncher
 {
@@ -10,11 +11,11 @@ namespace TeardownMultiplayerLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly Core.Core _core = new Core.Core();
+        private readonly CoreApi _coreApi = new CoreApi();
 
         public MainWindow()
         {
-            _core.LoadSettings();
+            _coreApi.LoadState();
             InitializeComponent();
             InitializeLauncherVersionLabel();
             UpdateForm();
@@ -22,12 +23,12 @@ namespace TeardownMultiplayerLauncher
 
         private void InitializeLauncherVersionLabel()
         {
-            _launcherVersionLabel.Content = $"TDMP Launcher v{_core.GetLauncherVersion()}";
+            _launcherVersionLabel.Content = $"TDMP Launcher v{_coreApi.GetLauncherVersion()}";
         }
 
         private void UpdateForm()
         {
-            var isGameVersionSupported = _core.HasSupportedTeardownVersion();
+            var isGameVersionSupported = _coreApi.HasSupportedTeardownVersion();
 
             _versionSupportLabel.Content = isGameVersionSupported switch
             {
@@ -42,7 +43,7 @@ namespace TeardownMultiplayerLauncher
                 null => new SolidColorBrush(Color.FromArgb(0xFF, 0xA9, 0xA3, 0x00)),
             };
 
-            _teardownFolderTextBox.Content = _core.GetTeardownExePath();
+            _teardownFolderTextBox.Content = _coreApi.GetTeardownExePath();
 
             _playButton.IsEnabled = isGameVersionSupported == true;
         }
@@ -55,7 +56,7 @@ namespace TeardownMultiplayerLauncher
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                _core.SetTeardownExePath(dialog.FileName);
+                _coreApi.SetTeardownExePath(dialog.FileName);
                 UpdateForm();
             }
         }
@@ -63,8 +64,8 @@ namespace TeardownMultiplayerLauncher
         private void _playButton_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() => {
-                _core.SaveSettings();
-                if (!_core.LaunchTeardownMultiplayer())
+                _coreApi.SaveState();
+                if (!_coreApi.LaunchTeardownMultiplayer())
                 {
                     System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }

@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace TeardownMultiplayerLauncher.Core
+namespace TeardownMultiplayerLauncher.Core.Models
 {
-    internal class Settings
+    internal class State
     {
         [JsonProperty("teardown_exe_path")]
         public string TeardownExePath { get; set; }

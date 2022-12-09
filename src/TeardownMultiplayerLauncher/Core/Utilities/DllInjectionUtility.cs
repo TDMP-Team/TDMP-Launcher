@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace TeardownMultiplayerLauncher.Core
+namespace TeardownMultiplayerLauncher.Core.Utilities
 {
     // Modified example from guidedhacking.com | Credits: https://guidedhacking.com/threads/c-dll-injector-tutorial-how-to-inject-a-dll.14915/
-    internal class DllInjectionUtility
+    internal static class DllInjectionUtility
     {
         private class ghapi
         {
@@ -61,7 +61,7 @@ namespace TeardownMultiplayerLauncher.Core
                 [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] public string szExeFile;
             };
 
-            [StructLayout(LayoutKind.Sequential, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+            [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
             public struct MODULEENTRY32
             {
                 internal uint dwSize;
@@ -82,11 +82,11 @@ namespace TeardownMultiplayerLauncher.Core
 
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool ReadProcessMemory(
-            IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, Int32 nSize, out IntPtr lpNumberOfBytesRead);
+            IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int nSize, out IntPtr lpNumberOfBytesRead);
 
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool WriteProcessMemory(
-            IntPtr hProcess, IntPtr lpBaseAddress, [MarshalAs(UnmanagedType.AsAny)] object lpBuffer, Int32 nSize, out IntPtr lpNumberOfBytesWritten);
+            IntPtr hProcess, IntPtr lpBaseAddress, [MarshalAs(UnmanagedType.AsAny)] object lpBuffer, int nSize, out IntPtr lpNumberOfBytesWritten);
 
             [DllImport("kernel32.dll")]
             private static extern bool Process32First(IntPtr hSnapshot, ref PROCESSENTRY32 lppe);
@@ -230,7 +230,7 @@ namespace TeardownMultiplayerLauncher.Core
                 {
                     ReadProcessMemory(hProc, ptr, buffer, buffer.Length, out
                     var read);
-                    ptr = (IntPtr.Size == 4) ? IntPtr.Add(new IntPtr(BitConverter.ToInt32(buffer, 0)), i) : ptr = IntPtr.Add(new IntPtr(BitConverter.ToInt64(buffer, 0)), i);
+                    ptr = IntPtr.Size == 4 ? IntPtr.Add(new IntPtr(BitConverter.ToInt32(buffer, 0)), i) : ptr = IntPtr.Add(new IntPtr(BitConverter.ToInt64(buffer, 0)), i);
                 }
                 return ptr;
             }
@@ -291,7 +291,7 @@ namespace TeardownMultiplayerLauncher.Core
             }
         }
 
-        public bool InjectDLL(string dllpath, Process process)
+        public static bool InjectDLL(string dllpath, Process process)
         {
             //redundant native method example - GetProcessesByName will automatically open a handle
             int procid = process.Id;
