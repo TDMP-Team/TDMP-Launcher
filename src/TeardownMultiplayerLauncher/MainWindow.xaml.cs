@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using TeardownMultiplayerLauncher.Core;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace TeardownMultiplayerLauncher
 {
@@ -16,8 +17,10 @@ namespace TeardownMultiplayerLauncher
 
         public MainWindow()
         {
+            _core.LoadSettings();
             InitializeComponent();
             InitializeLauncherVersionLabel();
+            UpdateForm();
         }
 
         private void InitializeLauncherVersionLabel()
@@ -42,6 +45,8 @@ namespace TeardownMultiplayerLauncher
                 null => new SolidColorBrush(Color.FromArgb(0xFF, 0xA9, 0xA3, 0x00)),
             };
 
+            _teardownFolderTextBox.Content = _core.GetTeardownExePath();
+
             _playButton.IsEnabled = isGameVersionSupported == true;
         }
 
@@ -54,7 +59,6 @@ namespace TeardownMultiplayerLauncher
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 _core.SetTeardownExePath(dialog.FileName);
-                _teardownFolderTextBox.Content = dialog.FileName;
                 UpdateForm();
             }
         }
@@ -62,6 +66,7 @@ namespace TeardownMultiplayerLauncher
         private void _playButton_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() => {
+                _core.SaveSettings();
                 if (!_core.LaunchTeardownMultiplayer())
                 {
                     System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
