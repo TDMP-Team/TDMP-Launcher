@@ -15,7 +15,7 @@ namespace TeardownMultiplayerLauncher
 
         public MainWindow()
         {
-            _coreApi.LoadState();
+            _coreApi.LoadConfig();
             InitializeComponent();
             InitializeLauncherVersionLabel();
             UpdateForm();
@@ -64,7 +64,7 @@ namespace TeardownMultiplayerLauncher
         private void _playButton_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() => {
-                _coreApi.SaveState();
+                _coreApi.SaveConfig();
                 if (!_coreApi.LaunchTeardownMultiplayer())
                 {
                     System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

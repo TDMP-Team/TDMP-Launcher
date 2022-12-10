@@ -7,35 +7,35 @@ namespace TeardownMultiplayerLauncher.Core
 {
     internal class CoreApi
     {
-        private readonly StateRepository _stateRepository;
+        private readonly LauncherConfigRepository _launcherConfigRepository;
         private readonly GameLaunchingService _gameLaunchingService;
-        private State _state;
+        private LauncherConfig _config;
 
         public CoreApi()
         {
-            _stateRepository = new StateRepository();
+            _launcherConfigRepository = new LauncherConfigRepository();
             _gameLaunchingService = new GameLaunchingService();
-            _state = new State();
+            _config = new LauncherConfig();
         }
 
         public bool LaunchTeardownMultiplayer()
         {
-            return _gameLaunchingService.LaunchTeardownMultiplayer(_state.TeardownExePath);
+            return _gameLaunchingService.LaunchTeardownMultiplayer(_config.TeardownExePath);
         }
 
         public string GetTeardownExePath()
         {
-            return _state.TeardownExePath;
+            return _config.TeardownExePath;
         }
 
         public void SetTeardownExePath(string path)
         {
-            _state.TeardownExePath = path.Trim();
+            _config.TeardownExePath = path.Trim();
         }
 
         public bool? HasSupportedTeardownVersion()
         {
-            return GameVersionUtility.HasSupportedTeardownVersion(_state.TeardownExePath);
+            return GameVersionUtility.HasSupportedTeardownVersion(_config.TeardownExePath);
         }
 
         public string GetLauncherVersion()
@@ -43,14 +43,14 @@ namespace TeardownMultiplayerLauncher.Core
             return LauncherVersionUtility.GetLauncherVersion();
         }
 
-        public void LoadState()
+        public void LoadConfig()
         {
-            _state = _stateRepository.GetState();
+            _config = _launcherConfigRepository.GetLauncherConfig();
         }
 
-        public void SaveState()
+        public void SaveConfig()
         {
-            _stateRepository.SaveState(_state);
+            _launcherConfigRepository.SaveLauncherConfig(_config);
         }
     }
 }
