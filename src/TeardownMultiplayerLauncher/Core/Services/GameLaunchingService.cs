@@ -9,18 +9,37 @@ namespace TeardownMultiplayerLauncher.Core.Services
 {
     internal class GameLaunchingService
     {
+        private static readonly int MaxProcessSearchAttempts = 3;
+
         public async Task LaunchTeardownMultiplayerAsync(string teardownExePath)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                LaunchTeardown(teardownExePath);
-                Thread.Sleep(5000); // TODO: detect when game is actually ready to inject into.
-                var teardownProcess = Process.GetProcessesByName("teardown").FirstOrDefault();
-                if (teardownProcess == null)
+                Process.Start(teardownExePath);
+
+                for (var processSearchAttempt = 1; processSearchAttempt <= MaxProcessSearchAttempts; ++processSearchAttempt)
                 {
-                    throw new Exception("Could not find running Teardown process");
+                    Thread.Sleep(5000); // TODO: detect when game is actually ready to inject into.
+                    var teardownProcess = Process.GetProcessesByName("teardown").FirstOrDefault(); // Search for teardown process again to get around issue where Steam DRM re-launches game.
+                    if (teardownProcess == null)
+                    {
+                        if (processSearchAttempt < MaxProcessSearchAttempts)
+                        {
+                            continue;
+                        }
+                        throw new Exception("Could not find running Teardown process");
+                    }
+                    if (!InjectTeardownMultiplayer(teardownProcess, teardownExePath))
+                    {
+                        throw new Exception("Failed to inject TDMP");
+                    }
+                    teardownProcess = Process.GetProcessesByName("teardown").FirstOrDefault(); // Search for teardown process again after injection because the old Process object gets corrupted.
+                    if (teardownProcess != null)
+                    {
+                        teardownProcess.WaitForExit();
+                    }
+                    return;
                 }
-                InjectTeardownMultiplayer(teardownProcess, teardownExePath);
             }).ContinueWith(task =>
             {
                 if (task.IsFaulted)
@@ -28,11 +47,6 @@ namespace TeardownMultiplayerLauncher.Core.Services
                     throw task.Exception;
                 }
             });
-        }
-
-        private Process LaunchTeardown(string teardownExePath)
-        {
-            return Process.Start(teardownExePath);
         }
 
         private bool InjectTeardownMultiplayer(Process teardownProcess, string teardownExePath)

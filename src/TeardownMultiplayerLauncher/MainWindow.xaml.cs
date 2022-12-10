@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using TeardownMultiplayerLauncher.Core;
 
@@ -62,17 +63,20 @@ namespace TeardownMultiplayerLauncher
 
         private async void _playButton_Click(object sender, RoutedEventArgs e)
         {
-            _playButton.IsEnabled = false;
+            _gameRunningGrid.Visibility = Visibility.Visible;
             try
             {
-                await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
+                if (!Keyboard.IsKeyDown(Key.LeftShift)) // Skip setup if shift is held when clicking Play (primarily for debugging and working around GitHub rate limits).
+                {
+                    await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
+                }
                 await _coreApi.LaunchTeardownMultiplayer();
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"An error occurred while launching the game. If the issue persists, please contact support in Discord:\n\n{ex}", "Teardown Multiplayer", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            _playButton.IsEnabled = true;
+            _gameRunningGrid.Visibility = Visibility.Hidden;
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

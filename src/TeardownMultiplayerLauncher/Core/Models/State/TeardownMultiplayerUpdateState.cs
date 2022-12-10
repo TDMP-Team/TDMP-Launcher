@@ -6,7 +6,7 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
     internal class TeardownMultiplayerUpdateState
     {
         [JsonProperty("github_repository_owner")]
-        public string GitHubRepositoryOwner { get; set; } = "DangerKiddy";
+        public string GitHubRepositoryOwner { get; set; } = "TDMP-Team";
 
         [JsonProperty("github_repository_name")]
         public string GitHubRepositoryName { get; set; } = "TDMP-Public";
