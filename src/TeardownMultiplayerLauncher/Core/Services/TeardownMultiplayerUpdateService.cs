@@ -21,11 +21,21 @@ namespace TeardownMultiplayerLauncher.Core.Services
 
         public async Task SetUpLatestReleaseAsync(string teardownDirectoryPath)
         {
+            if (_state.LastCheckDateTimeUtc.HasValue && (DateTime.UtcNow - _state.LastCheckDateTimeUtc) < _state.CheckCooldownDuration) // Prevent frequent release checks/downloads to not get rate limited by GitHub.
+            {
+                return;
+            }
+
             var latestReleaseVersion = (await _packageResolver.GetPackageVersionsAsync()).First();
-            var zipFilePath = await DownloadReleaseZipAsync(latestReleaseVersion);
-            await UninstallCurrentReleaseAsync();
-            await InstallLatestReleaseFromZipAsync(zipFilePath, teardownDirectoryPath);
-            _state.InstalledVersion = latestReleaseVersion.ToString();
+            if (!string.Equals(latestReleaseVersion.ToString(), _state.InstalledVersion, StringComparison.Ordinal))
+            {
+                var zipFilePath = await DownloadReleaseZipAsync(latestReleaseVersion);
+                await UninstallCurrentReleaseAsync();
+                await InstallLatestReleaseFromZipAsync(zipFilePath, teardownDirectoryPath);
+                _state.InstalledVersion = latestReleaseVersion.ToString();
+            }
+            
+            _state.LastCheckDateTimeUtc = DateTime.UtcNow;
         }
 
         private async Task<string> DownloadReleaseZipAsync(Version releaseVersion)

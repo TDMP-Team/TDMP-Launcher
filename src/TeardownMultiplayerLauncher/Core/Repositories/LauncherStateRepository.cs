@@ -12,12 +12,14 @@ namespace TeardownMultiplayerLauncher.Core.Repositories
         public async Task<LauncherState> GetLauncherStateAsync()
         {
             await EnsureLauncherStateFileExistsAsync();
-            return JsonConvert.DeserializeObject<LauncherState>(await File.ReadAllTextAsync(LauncherStateFilePath));
+            var launcherState = JsonConvert.DeserializeObject<LauncherState>(await File.ReadAllTextAsync(LauncherStateFilePath));
+            return launcherState.LauncherStateVersion == LauncherState.CurrentLauncherStateVersion ? launcherState : new LauncherState();
         }
 
         public async Task SaveLauncherStateAsync(LauncherState state)
         {
             await EnsureLauncherStateFileExistsAsync();
+            state.LauncherStateVersion = LauncherState.CurrentLauncherStateVersion;
             await File.WriteAllTextAsync(LauncherStateFilePath, JsonConvert.SerializeObject(state));
         }
 
