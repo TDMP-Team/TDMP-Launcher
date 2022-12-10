@@ -8,19 +8,19 @@ namespace TeardownMultiplayerLauncher.Core
     internal class CoreApi
     {
         private readonly StateRepository _stateRepository;
-        private readonly GameLaunchingService _gameLauncherService;
+        private readonly GameLaunchingService _gameLaunchingService;
         private State _state;
 
         public CoreApi()
         {
             _stateRepository = new StateRepository();
-            _gameLauncherService = new GameLaunchingService();
+            _gameLaunchingService = new GameLaunchingService();
             _state = new State();
         }
 
         public bool LaunchTeardownMultiplayer()
         {
-            return _gameLauncherService.LaunchTeardownMultiplayer(_state.TeardownExePath);
+            return _gameLaunchingService.LaunchTeardownMultiplayer(_state.TeardownExePath);
         }
 
         public string GetTeardownExePath()

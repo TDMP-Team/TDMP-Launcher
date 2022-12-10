@@ -10,7 +10,7 @@ namespace TeardownMultiplayerLauncher.Core.Services
         public bool LaunchTeardownMultiplayer(string teardownExePath)
         {
             LaunchTeardown(teardownExePath);
-            Thread.Sleep(5000);
+            Thread.Sleep(5000); // TODO: detect when game is actually ready to inject into.
             var teardownProcess = Process.GetProcessesByName("teardown").FirstOrDefault();
             if (teardownProcess == null)
             {
