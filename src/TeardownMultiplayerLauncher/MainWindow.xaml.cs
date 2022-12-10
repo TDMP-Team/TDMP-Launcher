@@ -46,6 +46,8 @@ namespace TeardownMultiplayerLauncher
             _teardownFolderTextBox.Content = _coreApi.GetTeardownExePath();
 
             _playButton.IsEnabled = isGameVersionSupported == true;
+
+            _teardownMultiplayerVersionLabel.Content = $"TDMP v{_coreApi.GetInstalledTeardownMultiplayerVersion()}";
         }
 
         private void _teardownFolderBrowseButton_Click(object sender, RoutedEventArgs e)
@@ -69,6 +71,7 @@ namespace TeardownMultiplayerLauncher
                 if (!Keyboard.IsKeyDown(Key.LeftShift)) // Skip setup if shift is held when clicking Play (primarily for debugging and working around GitHub rate limits).
                 {
                     await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
+                    UpdateForm();
                 }
                 await _coreApi.LaunchTeardownMultiplayer();
             }

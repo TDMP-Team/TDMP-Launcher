@@ -39,7 +39,14 @@
                     <Button x:Name="_playButton" Content="PLAY" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="35" Height="50" Margin="0,0,0,25" Click="_playButton_Click" IsEnabled="False"/>
                 </Grid>
             </materialDesign:Card>
-            <Label x:Name="_launcherVersionLabel" Content="TDMP Launcher vx.x.x.x" Margin="320,0,0,0" Foreground="{DynamicResource MaterialDesignCardBackground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Padding="5,5,20.7,5" Height="20" VerticalAlignment="Bottom"/>
+            <Grid Margin="20,0,20,0" Height="20" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_teardownMultiplayerVersionLabel" Content="" Foreground="{DynamicResource MaterialDesignCardBackground}" FontSize="10" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.ColumnSpan="1"/>
+                <Label x:Name="_launcherVersionLabel" Content="TDMP Launcher vx.x.x.x" Foreground="{DynamicResource MaterialDesignCardBackground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1"/>
+            </Grid>
         </Grid>
 
         <Grid x:Name="_gameRunningGrid" Visibility="Hidden">
