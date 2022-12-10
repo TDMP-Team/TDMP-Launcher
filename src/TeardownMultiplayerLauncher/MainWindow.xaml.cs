@@ -64,7 +64,7 @@ namespace TeardownMultiplayerLauncher
             await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
             if (!_coreApi.LaunchTeardownMultiplayer())
             {
-                System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Teardown Multiplayer", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
