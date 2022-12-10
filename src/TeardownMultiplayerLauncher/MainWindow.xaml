@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Teardown Multiplayer" Width="640" Height="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico">
+        Title="Teardown Multiplayer" Width="640" Height="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico" Loaded="Window_Loaded">
     <Grid>
         <Grid Height="150" VerticalAlignment="Top">
             <Image gif:ImageBehavior.AnimatedSource="Resources/TDMP.gif" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>

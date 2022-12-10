@@ -1,4 +1,6 @@
-﻿using TeardownMultiplayerLauncher.Core.Models;
+﻿using System;
+using System.Threading.Tasks;
+using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Repositories;
 using TeardownMultiplayerLauncher.Core.Services;
 using TeardownMultiplayerLauncher.Core.Utilities;
@@ -7,35 +9,37 @@ namespace TeardownMultiplayerLauncher.Core
 {
     internal class CoreApi
     {
-        private readonly LauncherConfigRepository _launcherConfigRepository;
-        private readonly GameLaunchingService _gameLaunchingService;
-        private LauncherConfig _config;
+        private LauncherStateRepository _launcherConfigRepository;
+        private GameLaunchingService _gameLaunchingService;
+        private TeardownMultiplayerUpdateService _teardownMultiplayerUpdateService;
+        private LauncherState _state;
 
-        public CoreApi()
+        public async Task InitializeAsync()
         {
-            _launcherConfigRepository = new LauncherConfigRepository();
+            _launcherConfigRepository = new LauncherStateRepository();
             _gameLaunchingService = new GameLaunchingService();
-            _config = new LauncherConfig();
+            _state = await _launcherConfigRepository.GetLauncherStateAsync();
+            _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state.TeardownMultiplayerUpdateState);
         }
 
         public bool LaunchTeardownMultiplayer()
         {
-            return _gameLaunchingService.LaunchTeardownMultiplayer(_config.TeardownExePath);
+            return _gameLaunchingService.LaunchTeardownMultiplayer(_state.TeardownExePath);
         }
 
         public string GetTeardownExePath()
         {
-            return _config.TeardownExePath;
+            return _state.TeardownExePath;
         }
 
         public void SetTeardownExePath(string path)
         {
-            _config.TeardownExePath = path.Trim();
+            _state.TeardownExePath = path.Trim();
         }
 
         public bool? HasSupportedTeardownVersion()
         {
-            return GameVersionUtility.HasSupportedTeardownVersion(_config.TeardownExePath);
+            return GameVersionUtility.HasSupportedTeardownVersion(_state.TeardownExePath);
         }
 
         public string GetLauncherVersion()
@@ -43,14 +47,15 @@ namespace TeardownMultiplayerLauncher.Core
             return LauncherVersionUtility.GetLauncherVersion();
         }
 
-        public void LoadConfig()
+        public string GetInstalledTeardownMultiplayerVersion()
         {
-            _config = _launcherConfigRepository.GetLauncherConfig();
+            return _state.TeardownMultiplayerUpdateState.InstalledVersion;
         }
 
-        public void SaveConfig()
+        public async Task SetUpLatestTeardownMultiplayerReleaseAsync()
         {
-            _launcherConfigRepository.SaveLauncherConfig(_config);
+            await _teardownMultiplayerUpdateService.SetUpLatestReleaseAsync(TeardownPathUtility.GetTeardownDirectory(_state.TeardownExePath));
+            await _launcherConfigRepository.SaveLauncherStateAsync(_state);
         }
     }
 }

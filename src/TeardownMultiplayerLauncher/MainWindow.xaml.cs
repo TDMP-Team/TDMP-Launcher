@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -15,10 +16,7 @@ namespace TeardownMultiplayerLauncher
 
         public MainWindow()
         {
-            _coreApi.LoadConfig();
             InitializeComponent();
-            InitializeLauncherVersionLabel();
-            UpdateForm();
         }
 
         private void InitializeLauncherVersionLabel()
@@ -61,15 +59,20 @@ namespace TeardownMultiplayerLauncher
             }
         }
 
-        private void _playButton_Click(object sender, RoutedEventArgs e)
+        private async void _playButton_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() => {
-                _coreApi.SaveConfig();
-                if (!_coreApi.LaunchTeardownMultiplayer())
-                {
-                    System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }).Start();
+            await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
+            if (!_coreApi.LaunchTeardownMultiplayer())
+            {
+                System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _coreApi.InitializeAsync();
+            InitializeLauncherVersionLabel();
+            UpdateForm();
         }
     }
 }
