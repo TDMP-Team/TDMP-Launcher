@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -61,11 +62,17 @@ namespace TeardownMultiplayerLauncher
 
         private async void _playButton_Click(object sender, RoutedEventArgs e)
         {
-            await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
-            if (!_coreApi.LaunchTeardownMultiplayer())
+            _playButton.IsEnabled = false;
+            try
             {
-                System.Windows.MessageBox.Show("Failed to inject TDMP, please try again. If issue persists, please contact support in Discord.", "Teardown Multiplayer", MessageBoxButton.OK, MessageBoxImage.Error);
+                await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
+                await _coreApi.LaunchTeardownMultiplayer();
             }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"An error occurred while launching the game. If the issue persists, please contact support in Discord:\n\n{ex}", "Teardown Multiplayer", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            _playButton.IsEnabled = true;
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

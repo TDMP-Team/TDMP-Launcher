@@ -22,9 +22,9 @@ namespace TeardownMultiplayerLauncher.Core
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state.TeardownMultiplayerUpdateState);
         }
 
-        public bool LaunchTeardownMultiplayer()
+        public async Task LaunchTeardownMultiplayer()
         {
-            return _gameLaunchingService.LaunchTeardownMultiplayer(_state.TeardownExePath);
+            await _gameLaunchingService.LaunchTeardownMultiplayerAsync(_state.TeardownExePath);
         }
 
         public string GetTeardownExePath()

@@ -47,6 +47,12 @@ namespace TeardownMultiplayerLauncher.Core.Services
                     }
                 }
                 _state.InstalledFilePaths.Clear();
+            }).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    throw task.Exception;
+                }
             });
         }
 
@@ -64,6 +70,12 @@ namespace TeardownMultiplayerLauncher.Core.Services
                     }
                 }
                 ZipFile.ExtractToDirectory(zipFilePath, teardownDirectoryPath, true);
+            }).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    throw task.Exception;
+                }
             });
         }
     }
