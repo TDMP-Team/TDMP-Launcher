@@ -21,21 +21,34 @@ namespace TeardownMultiplayerLauncher.Core.Services
 
         public async Task SetUpLatestReleaseAsync(string teardownDirectoryPath)
         {
-            if (_state.LastCheckDateTimeUtc.HasValue && (DateTime.UtcNow - _state.LastCheckDateTimeUtc) < _state.CheckCooldownDuration) // Prevent frequent release checks/downloads to not get rate limited by GitHub.
+            if (IsOnCooldown())
             {
                 return;
             }
 
             var latestReleaseVersion = (await _packageResolver.GetPackageVersionsAsync()).First();
-            if (!string.Equals(latestReleaseVersion.ToString(), _state.InstalledVersion, StringComparison.Ordinal))
+            if (IsLatestReleaseNewerThanInstalledVersion(latestReleaseVersion))
             {
                 var zipFilePath = await DownloadReleaseZipAsync(latestReleaseVersion);
                 await UninstallCurrentReleaseAsync();
                 await InstallLatestReleaseFromZipAsync(zipFilePath, teardownDirectoryPath);
                 _state.InstalledVersion = latestReleaseVersion.ToString();
             }
-            
+
             _state.LastCheckDateTimeUtc = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Prevent frequent release checks/downloads to avoid getting rate-limited by GitHub.
+        /// </summary>
+        private bool IsOnCooldown()
+        {
+            return _state.LastCheckDateTimeUtc.HasValue && (DateTime.UtcNow - _state.LastCheckDateTimeUtc) < _state.CheckCooldownDuration;
+        }
+
+        private bool IsLatestReleaseNewerThanInstalledVersion(Version latestReleaseVersion)
+        {
+            return !string.Equals(latestReleaseVersion.ToString(), _state.InstalledVersion, StringComparison.Ordinal);
         }
 
         private async Task<string> DownloadReleaseZipAsync(Version releaseVersion)

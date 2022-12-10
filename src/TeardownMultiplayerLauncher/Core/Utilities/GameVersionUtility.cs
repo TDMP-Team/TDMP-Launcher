@@ -6,7 +6,7 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
 {
     internal static class GameVersionUtility
     {
-        public static readonly string SupportedTeardownMd5Hash = "004fb1bf0e06ba9bf2d8eb8d3dc2e142"; // TODO: make configurable or retrieved at runtime
+        public static readonly string SupportedTeardownMd5Hash = "004fb1bf0e06ba9bf2d8eb8d3dc2e142"; // Teardown version "1.2.0 (patch 2)" | TODO: make configurable or retrieved at runtime -- maybe TDMP can provide a manifest of its supported Teardown md5 and version
 
         public static string? GetTeardownMd5Hash(string teardownExePath)
         {
