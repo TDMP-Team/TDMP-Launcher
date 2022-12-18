@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,14 +14,14 @@ namespace TeardownMultiplayerLauncher.Core.Services
 
         public async Task LaunchTeardownMultiplayerAsync(string teardownExePath)
         {
+            var processName = Path.GetFileNameWithoutExtension(teardownExePath);
             await Task.Run(async () =>
             {
                 Process.Start(teardownExePath);
-
                 for (var processSearchAttempt = 1; processSearchAttempt <= MaxProcessSearchAttempts; ++processSearchAttempt)
                 {
-                    Thread.Sleep(5000); // TODO: detect when game is actually ready to inject into.
-                    var teardownProcess = Process.GetProcessesByName("teardown").FirstOrDefault(); // Search for teardown process again to get around issue where Steam DRM re-launches game.
+                    Thread.Sleep(3000); // Search interval delay.
+                    var teardownProcess = Process.GetProcessesByName(processName).FirstOrDefault(); // Search for teardown process again to get around issue where Steam DRM re-launches game.
                     if (teardownProcess == null)
                     {
                         if (processSearchAttempt < MaxProcessSearchAttempts)
@@ -29,11 +30,12 @@ namespace TeardownMultiplayerLauncher.Core.Services
                         }
                         throw new Exception("Could not find running Teardown process");
                     }
+                    Thread.Sleep(3000); // TODO: detect when game is actually ready to inject into. This just gives the game some time to "warm up" before injecting.
                     if (!InjectTeardownMultiplayer(teardownProcess, teardownExePath))
                     {
                         throw new Exception("Failed to inject TDMP");
                     }
-                    teardownProcess = Process.GetProcessesByName("teardown").FirstOrDefault(); // Search for teardown process again after injection because the old Process object gets corrupted.
+                    teardownProcess = Process.GetProcessesByName(processName).FirstOrDefault(); // Search for teardown process again after injection because the old Process object gets corrupted.
                     if (teardownProcess != null)
                     {
                         teardownProcess.WaitForExit();
