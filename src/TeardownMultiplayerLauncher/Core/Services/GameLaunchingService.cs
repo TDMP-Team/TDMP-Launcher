@@ -9,7 +9,7 @@ namespace TeardownMultiplayerLauncher.Core.Services
 {
     internal class GameLaunchingService
     {
-        private static readonly int MaxProcessSearchAttempts = 3;
+        private static readonly int MaxProcessSearchAttempts = 10;
 
         public async Task LaunchTeardownMultiplayerAsync(string teardownExePath)
         {
