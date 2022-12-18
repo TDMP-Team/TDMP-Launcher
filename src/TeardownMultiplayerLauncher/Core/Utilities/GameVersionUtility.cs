@@ -6,7 +6,8 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
 {
     internal static class GameVersionUtility
     {
-        public static readonly string SupportedTeardownMd5Hash = "1e77cbb0eafe6acd142549c6506446da"; // Teardown version "1.3.0" | TODO: make configurable or retrieved at runtime -- maybe TDMP can provide a manifest of its supported Teardown md5 and version
+        public static readonly string SupportedTeardownVersion = "1.3.0";
+        public static readonly string SupportedTeardownExeMd5Hash = "1e77cbb0eafe6acd142549c6506446da";
 
         public static string? GetTeardownMd5Hash(string teardownExePath)
         {
@@ -31,7 +32,7 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
             {
                 return null;
             }
-            return string.Equals(teardownExeMd5Hash, SupportedTeardownMd5Hash, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(teardownExeMd5Hash, SupportedTeardownExeMd5Hash, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

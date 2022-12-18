@@ -28,7 +28,7 @@
 
             <materialDesign:Card Margin="20,170,20,20" Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
                 <Grid>
-                    <Label x:Name="_versionSupportLabel" Content="SELECT YOUR TEARDOWN.EXE" HorizontalAlignment="Right" Width="200" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFA9A300" FontSize="10"/>
+                    <Label x:Name="_versionSupportLabel" Content="SELECT YOUR TEARDOWN.EXE" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFA9A300" FontSize="10"/>
                     <StackPanel Margin="10,10,10,80">
                         <Label Content="TEARDOWN.EXE PATH" FontWeight="Bold" Padding="0,0,0,10"/>
                         <StackPanel Orientation="Horizontal" >

@@ -37,6 +37,11 @@ namespace TeardownMultiplayerLauncher.Core
             _state.TeardownExePath = path.Trim();
         }
 
+        public string GetSupportedTeardownVersion()
+        {
+            return GameVersionUtility.SupportedTeardownVersion;
+        }
+
         public bool? HasSupportedTeardownVersion()
         {
             return GameVersionUtility.HasSupportedTeardownVersion(_state.TeardownExePath);

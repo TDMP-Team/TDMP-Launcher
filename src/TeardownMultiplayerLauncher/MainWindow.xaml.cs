@@ -33,7 +33,7 @@ namespace TeardownMultiplayerLauncher
             _versionSupportLabel.Content = isGameVersionSupported switch
             {
                 true => "TEARDOWN VERSION SUPPORTED",
-                false => "TEARDOWN VERSION UNSUPPORTED",
+                false => $"TEARDOWN VERSION UNSUPPORTED (requires {_coreApi.GetSupportedTeardownVersion()})",
                 null => "SELECT YOUR TEARDOWN.EXE",
             };
             _versionSupportLabel.Background = isGameVersionSupported switch
