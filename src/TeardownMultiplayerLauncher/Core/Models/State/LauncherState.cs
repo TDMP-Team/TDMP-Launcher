@@ -10,7 +10,7 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
         public int LauncherStateVersion { get; set; }
 
         [JsonProperty("teardown_exe_path")]
-        public string TeardownExePath { get; set; }
+        public string? TeardownExePath { get; set; }
 
         [JsonProperty("teardown_multiplayer_update_state")]
         public TeardownMultiplayerUpdateState TeardownMultiplayerUpdateState { get; set; } = new TeardownMultiplayerUpdateState();

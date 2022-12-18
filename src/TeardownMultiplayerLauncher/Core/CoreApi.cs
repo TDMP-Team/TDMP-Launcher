@@ -9,10 +9,10 @@ namespace TeardownMultiplayerLauncher.Core
 {
     internal class CoreApi
     {
-        private LauncherStateRepository _launcherConfigRepository;
-        private GameLaunchingService _gameLaunchingService;
-        private TeardownMultiplayerUpdateService _teardownMultiplayerUpdateService;
-        private LauncherState _state;
+        private LauncherStateRepository? _launcherConfigRepository;
+        private GameLaunchingService? _gameLaunchingService;
+        private TeardownMultiplayerUpdateService? _teardownMultiplayerUpdateService;
+        private LauncherState? _state;
 
         public async Task InitializeAsync()
         {

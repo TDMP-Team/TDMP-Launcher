@@ -22,7 +22,7 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
         public TimeSpan CheckCooldownDuration { get; set; } = TimeSpan.FromMinutes(30);
 
         [JsonProperty("installed_version")]
-        public string InstalledVersion { get; set; }
+        public string? InstalledVersion { get; set; }
 
         [JsonProperty("installed_file_paths")]
         public List<string> InstalledFilePaths { get; set; } = new List<string>();
