@@ -2,7 +2,7 @@
 
 namespace TeardownMultiplayerLauncher.Core.Utilities
 {
-    internal static class TeardownPathUtility
+    internal static class PathUtility
     {
         public static string GetTeardownDirectory(string teardownExePath)
         {

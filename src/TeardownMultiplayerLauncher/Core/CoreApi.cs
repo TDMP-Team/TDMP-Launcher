@@ -59,7 +59,7 @@ namespace TeardownMultiplayerLauncher.Core
 
         public async Task SetUpLatestTeardownMultiplayerReleaseAsync()
         {
-            await _teardownMultiplayerUpdateService.SetUpLatestReleaseAsync(TeardownPathUtility.GetTeardownDirectory(_state.TeardownExePath));
+            await _teardownMultiplayerUpdateService.SetUpLatestReleaseAsync(PathUtility.GetTeardownDirectory(_state.TeardownExePath));
             await _launcherConfigRepository.SaveLauncherStateAsync(_state);
         }
     }

@@ -19,7 +19,7 @@ namespace TeardownMultiplayerLauncher.Core.Services
             _state = state;
         }
 
-        public async Task SetUpLatestReleaseAsync(string teardownDirectoryPath)
+        public async Task SetUpLatestReleaseAsync(string teardownDirectory)
         {
             if (IsOnCooldown())
             {
@@ -30,8 +30,8 @@ namespace TeardownMultiplayerLauncher.Core.Services
             if (IsLatestReleaseNewerThanInstalledVersion(latestReleaseVersion))
             {
                 var zipFilePath = await DownloadReleaseZipAsync(latestReleaseVersion);
-                await UninstallCurrentReleaseAsync();
-                await InstallLatestReleaseFromZipAsync(zipFilePath, teardownDirectoryPath);
+                await UninstallCurrentReleaseAsync(teardownDirectory);
+                await InstallLatestReleaseFromZipAsync(zipFilePath, teardownDirectory);
                 _state.InstalledVersion = latestReleaseVersion.ToString();
             }
 
@@ -58,10 +58,14 @@ namespace TeardownMultiplayerLauncher.Core.Services
             return zipFilePath;
         }
 
-        private async Task UninstallCurrentReleaseAsync()
+        private async Task UninstallCurrentReleaseAsync(string teardownDirectory)
         {
             await Task.Run(() =>
             {
+                // Remove TDMP folders. This is required in case if files was removed or something unexpected happened.
+                Directory.Delete(Path.Combine(teardownDirectory, "mods/TDMP"), true);
+                Directory.Delete(Path.Combine(teardownDirectory, "data/TDMP"), true);
+
                 foreach (var filePath in _state.InstalledFilePaths)
                 {
                     if (File.Exists(filePath))

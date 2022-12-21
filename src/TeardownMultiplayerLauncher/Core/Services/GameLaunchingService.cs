@@ -55,7 +55,7 @@ namespace TeardownMultiplayerLauncher.Core.Services
         {
             try
             {
-                return DllInjectionUtility.InjectDLL(TeardownPathUtility.GetTeardownMultiplayerDllPath(teardownExePath), teardownProcess);
+                return DllInjectionUtility.InjectDLL(PathUtility.GetTeardownMultiplayerDllPath(teardownExePath), teardownProcess);
             }
             catch
             {
