@@ -8,22 +8,22 @@ namespace TeardownMultiplayerLauncher.Core
 {
     internal class CoreApi
     {
-        private LauncherStateRepository? _launcherConfigRepository;
+        private LauncherStateRepository? _launcherStateRepository;
         private GameLaunchingService? _gameLaunchingService;
         private TeardownMultiplayerUpdateService? _teardownMultiplayerUpdateService;
         private LauncherState? _state;
 
         public async Task InitializeAsync()
         {
-            _launcherConfigRepository = new LauncherStateRepository();
-            _gameLaunchingService = new GameLaunchingService();
-            _state = await _launcherConfigRepository.GetLauncherStateAsync();
+            _launcherStateRepository = new LauncherStateRepository();
+            _state = await _launcherStateRepository.GetLauncherStateAsync();
+            _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state.TeardownMultiplayerUpdateState);
         }
 
         public async Task LaunchTeardownMultiplayer()
         {
-            await _gameLaunchingService.LaunchTeardownMultiplayerAsync(_state.TeardownExePath);
+            await _gameLaunchingService.LaunchTeardownMultiplayerAsync();
         }
 
         public string GetTeardownExePath()
@@ -34,7 +34,7 @@ namespace TeardownMultiplayerLauncher.Core
         public async Task SetTeardownExePathAsync(string path)
         {
             _state.TeardownExePath = path.Trim();
-            await _launcherConfigRepository.SaveLauncherStateAsync(_state);
+            await _launcherStateRepository.SaveLauncherStateAsync(_state);
         }
 
         public string GetSupportedTeardownVersion()
@@ -60,7 +60,7 @@ namespace TeardownMultiplayerLauncher.Core
         public async Task SetUpLatestTeardownMultiplayerReleaseAsync()
         {
             await _teardownMultiplayerUpdateService.SetUpLatestReleaseAsync(PathUtility.GetTeardownDirectory(_state.TeardownExePath));
-            await _launcherConfigRepository.SaveLauncherStateAsync(_state);
+            await _launcherStateRepository.SaveLauncherStateAsync(_state);
         }
     }
 }

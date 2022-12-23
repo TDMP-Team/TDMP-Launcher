@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Utilities;
 
 namespace TeardownMultiplayerLauncher.Core.Services
@@ -10,14 +12,21 @@ namespace TeardownMultiplayerLauncher.Core.Services
     internal class GameLaunchingService
     {
         private static readonly int MaxProcessSearchAttempts = 10;
+        private static readonly TimeSpan ProcessSearchInterval = TimeSpan.FromSeconds(5);
         private static readonly string TeardownProcessName = "teardown";
+        private readonly LauncherState _state;
 
-        public async Task LaunchTeardownMultiplayerAsync(string teardownExePath)
+        public GameLaunchingService(LauncherState state)
+        {
+            _state = state;
+        }
+
+        public async Task LaunchTeardownMultiplayerAsync()
         {
             await Task.Run(() =>
             {
                 LaunchTeardown();
-                WaitForGameAndInject(teardownExePath);
+                WaitForGameAndInject();
             }).ContinueWith(task =>
             {
                 if (task.IsFaulted)
@@ -38,11 +47,11 @@ namespace TeardownMultiplayerLauncher.Core.Services
             );
         }
 
-        private void WaitForGameAndInject(string teardownExePath)
+        private void WaitForGameAndInject()
         {
             for (var processSearchAttempt = 1; processSearchAttempt <= MaxProcessSearchAttempts; ++processSearchAttempt)
             {
-                Thread.Sleep(3000); // Search interval delay.
+                Thread.Sleep(ProcessSearchInterval); // Search interval.
 
                 var teardownProcess = Process.GetProcessesByName(TeardownProcessName).FirstOrDefault();
                 if (teardownProcess == null)
@@ -54,7 +63,8 @@ namespace TeardownMultiplayerLauncher.Core.Services
                     throw new Exception("Could not find running Teardown process");
                 }
 
-                if (!InjectTeardownMultiplayer(teardownProcess, teardownExePath))
+                Thread.Sleep(_state.InjectionDelay.Milliseconds); // TODO: Reliably check memory if Teardown Game object is initialized. Slower PCs might take longer for Teardown to fully initialize and be ready to inject into.
+                if (!InjectTeardownMultiplayer(teardownProcess))
                 {
                     throw new Exception("Failed to inject TDMP");
                 }
@@ -68,17 +78,22 @@ namespace TeardownMultiplayerLauncher.Core.Services
             }
         }
 
-        private bool InjectTeardownMultiplayer(Process teardownProcess, string teardownExePath)
+        private bool InjectTeardownMultiplayer(Process teardownProcess)
         {
             try
             {
-                return DllInjectionUtility.InjectDLL(PathUtility.GetTeardownMultiplayerDllPath(teardownExePath), teardownProcess);
+                return DllInjectionUtility.InjectDLL(GetTeardownMultiplayerDllPath(), teardownProcess);
             }
             catch
             {
                 teardownProcess.Kill();
                 return false;
             }
+        }
+
+        private string GetTeardownMultiplayerDllPath()
+        {
+            return Path.Join(PathUtility.GetTeardownDirectory(_state.TeardownExePath), "TDMP.dll");
         }
     }
 }

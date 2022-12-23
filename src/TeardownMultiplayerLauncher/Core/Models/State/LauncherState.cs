@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace TeardownMultiplayerLauncher.Core.Models.State
 {
@@ -8,6 +9,9 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
 
         [JsonProperty("launcher_state_version")]
         public int LauncherStateVersion { get; set; }
+
+        [JsonProperty("injection_delay")]
+        public TimeSpan InjectionDelay { get; set; } = TimeSpan.FromSeconds(3);
 
         [JsonProperty("teardown_exe_path")]
         public string? TeardownExePath { get; set; }

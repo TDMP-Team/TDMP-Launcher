@@ -8,10 +8,5 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
         {
             return Path.GetDirectoryName(teardownExePath);
         }
-
-        public static string GetTeardownMultiplayerDllPath(string teardownExePath)
-        {
-            return Path.Join(GetTeardownDirectory(teardownExePath), "TDMP.dll");
-        }
     }
 }
