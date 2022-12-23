@@ -54,7 +54,8 @@ namespace TeardownMultiplayerLauncher.Core
 
         public string GetInstalledTeardownMultiplayerVersion()
         {
-            return _state.TeardownMultiplayerUpdateState.InstalledVersion;
+            var teardownMultiplayerFileVersion = FileVersionUtility.GetFileVersion(PathUtility.GetTeardownMultiplayerDllPath(_state.TeardownExePath));
+            return string.IsNullOrWhiteSpace(teardownMultiplayerFileVersion) ? _state.TeardownMultiplayerUpdateState.InstalledVersion : teardownMultiplayerFileVersion;
         }
 
         public async Task SetUpLatestTeardownMultiplayerReleaseAsync()

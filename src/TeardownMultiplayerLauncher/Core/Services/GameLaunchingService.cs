@@ -82,18 +82,13 @@ namespace TeardownMultiplayerLauncher.Core.Services
         {
             try
             {
-                return DllInjectionUtility.InjectDLL(GetTeardownMultiplayerDllPath(), teardownProcess);
+                return DllInjectionUtility.InjectDLL(PathUtility.GetTeardownMultiplayerDllPath(_state.TeardownExePath), teardownProcess);
             }
             catch
             {
                 teardownProcess.Kill();
                 return false;
             }
-        }
-
-        private string GetTeardownMultiplayerDllPath()
-        {
-            return Path.Join(PathUtility.GetTeardownDirectory(_state.TeardownExePath), "TDMP.dll");
         }
     }
 }

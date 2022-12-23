@@ -44,8 +44,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="_teardownMultiplayerVersionLabel" Content="" Foreground="{DynamicResource MaterialDesignCardBackground}" FontSize="10" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.ColumnSpan="1"/>
-                <Label x:Name="_launcherVersionLabel" Content="TDMP Launcher vx.x.x.x" Foreground="{DynamicResource MaterialDesignCardBackground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1"/>
+                <Label x:Name="_teardownMultiplayerVersionLabel" Content="TDMP vx.x.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.ColumnSpan="1"/>
+                <Label x:Name="_launcherVersionLabel" Content="TDMP Launcher vx.x.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1"/>
             </Grid>
         </Grid>
 
