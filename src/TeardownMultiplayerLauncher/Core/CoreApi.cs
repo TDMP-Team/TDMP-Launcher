@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Repositories;
 using TeardownMultiplayerLauncher.Core.Services;
@@ -32,9 +31,10 @@ namespace TeardownMultiplayerLauncher.Core
             return _state.TeardownExePath;
         }
 
-        public void SetTeardownExePath(string path)
+        public async Task SetTeardownExePathAsync(string path)
         {
             _state.TeardownExePath = path.Trim();
+            await _launcherConfigRepository.SaveLauncherStateAsync(_state);
         }
 
         public string GetSupportedTeardownVersion()

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -50,7 +48,7 @@ namespace TeardownMultiplayerLauncher
             _teardownMultiplayerVersionLabel.Content = $"TDMP v{_coreApi.GetInstalledTeardownMultiplayerVersion()}";
         }
 
-        private void _teardownFolderBrowseButton_Click(object sender, RoutedEventArgs e)
+        private async void _teardownFolderBrowseButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
             dialog.Title = "Please select your teardown.exe";
@@ -58,7 +56,7 @@ namespace TeardownMultiplayerLauncher
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                _coreApi.SetTeardownExePath(dialog.FileName);
+                await _coreApi.SetTeardownExePathAsync(dialog.FileName);
                 UpdateForm();
             }
         }
