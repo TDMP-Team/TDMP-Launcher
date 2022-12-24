@@ -63,21 +63,29 @@ namespace TeardownMultiplayerLauncher
 
         private async void _playButton_Click(object sender, RoutedEventArgs e)
         {
-            _gameRunningGrid.Visibility = Visibility.Visible;
+            _busyStatusGrid.Visibility = Visibility.Visible;
             try
             {
                 if (!Keyboard.IsKeyDown(Key.LeftShift)) // Skip setup if shift is held when clicking Play (primarily for debugging and working around GitHub rate limits).
                 {
+                    SetBusyStatusText("UPDATING TDMP");
                     await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
                     UpdateForm();
                 }
+
+                SetBusyStatusText("GAME RUNNING");
                 await _coreApi.LaunchTeardownMultiplayer();
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"An error occurred while launching the game. If the issue persists, please contact support in Discord:\n\n{ex}", "Teardown Multiplayer", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            _gameRunningGrid.Visibility = Visibility.Hidden;
+            _busyStatusGrid.Visibility = Visibility.Hidden;
+        }
+
+        private void SetBusyStatusText(string text)
+        {
+            _busyStatusLabel.Content = text;
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

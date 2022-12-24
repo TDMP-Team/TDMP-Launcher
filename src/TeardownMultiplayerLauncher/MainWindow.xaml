@@ -49,14 +49,14 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="_gameRunningGrid" Visibility="Hidden">
+        <Grid x:Name="_busyStatusGrid" Visibility="Hidden">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#F2000000"/>
                     <GradientStop Color="#F2191B29" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Label Content="GAME RUNNING" VerticalAlignment="Center" FontSize="50" Background="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}"/>
+            <Label x:Name="_busyStatusLabel" Content="LAUNCHER BUSY" VerticalAlignment="Center" FontSize="50" Background="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}"/>
         </Grid>
     </Grid>
 </Window>
