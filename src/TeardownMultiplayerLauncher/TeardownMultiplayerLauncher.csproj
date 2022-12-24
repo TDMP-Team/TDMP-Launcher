@@ -10,15 +10,24 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <FileVersion></FileVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <Title>Teardown Multiplayer Launcher</Title>
+    <Company>TDMP Team</Company>
+    <Product>Teardown Multiplayer Launcher</Product>
+    <Description>The official launcher for the Teardown Multiplayer mod.</Description>
+    <PackageIcon>icon.ico</PackageIcon>
+    <PackageProjectUrl>https://github.com/TDMP-Team/TDMP-Public</PackageProjectUrl>
+    <PackageTags>teardown;teardown multiplayer;tdmp;multiplayer;</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="icon.ico" />
+    <None Remove="Resources\discord.png" />
     <None Remove="TDMP.gif" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\discord.png" />
     <Resource Include="Resources\icon.ico" />
     <Resource Include="Resources\TDMP.gif" />
   </ItemGroup>
@@ -29,6 +38,13 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Onova" Version="2.6.3" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\icon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

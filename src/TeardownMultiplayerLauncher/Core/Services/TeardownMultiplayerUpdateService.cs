@@ -30,7 +30,8 @@ namespace TeardownMultiplayerLauncher.Core.Services
                 return;
             }
 
-            var latestReleaseVersion = (await _packageResolver.GetPackageVersionsAsync()).First();
+            var availablePackageVersions = await _packageResolver.GetPackageVersionsAsync();
+            var latestReleaseVersion = availablePackageVersions.First(); // Assume first package version is latest.
             if (IsLatestReleaseNewerThanInstalledVersion(latestReleaseVersion))
             {
                 var zipFilePath = await DownloadReleaseZipAsync(latestReleaseVersion);

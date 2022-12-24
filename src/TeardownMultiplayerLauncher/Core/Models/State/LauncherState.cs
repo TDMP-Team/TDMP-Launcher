@@ -10,6 +10,9 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
         [JsonProperty("launcher_state_version")]
         public int LauncherStateVersion { get; set; }
 
+        [JsonProperty("discord_url")]
+        public string DiscordUrl { get; set; } = "https://discord.gg/h8eSabqdA6";
+
         [JsonProperty("injection_delay")]
         public TimeSpan InjectionDelay { get; set; } = TimeSpan.FromSeconds(3);
 

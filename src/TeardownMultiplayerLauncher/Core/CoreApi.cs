@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Repositories;
 using TeardownMultiplayerLauncher.Core.Services;
@@ -62,6 +64,17 @@ namespace TeardownMultiplayerLauncher.Core
         {
             await _teardownMultiplayerUpdateService.SetUpLatestReleaseAsync(PathUtility.GetTeardownDirectory(_state.TeardownExePath));
             await _launcherStateRepository.SaveLauncherStateAsync(_state);
+        }
+
+        internal void OpenDiscordServer()
+        {
+            Process.Start(
+                new ProcessStartInfo(_state.DiscordUrl)
+                {
+                    UseShellExecute = true,
+                    Verb = "open",
+                }
+            );
         }
     }
 }

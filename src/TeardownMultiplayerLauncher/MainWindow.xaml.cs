@@ -94,5 +94,10 @@ namespace TeardownMultiplayerLauncher
             InitializeLauncherVersionLabel();
             UpdateForm();
         }
+
+        private void _discordGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _coreApi.OpenDiscordServer();
+        }
     }
 }
