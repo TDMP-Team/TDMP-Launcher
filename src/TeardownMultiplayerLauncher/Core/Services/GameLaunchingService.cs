@@ -11,8 +11,8 @@ namespace TeardownMultiplayerLauncher.Core.Services
 {
     internal class GameLaunchingService
     {
-        private static readonly int MaxProcessSearchAttempts = 10;
-        private static readonly TimeSpan ProcessSearchInterval = TimeSpan.FromSeconds(5);
+        private static readonly int MaxProcessSearchAttempts = 30;
+        private static readonly TimeSpan ProcessSearchInterval = TimeSpan.FromSeconds(1);
         private static readonly string TeardownProcessName = "teardown";
         private readonly LauncherState _state;
 

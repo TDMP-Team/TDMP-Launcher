@@ -66,7 +66,18 @@ namespace TeardownMultiplayerLauncher.Core
             await _launcherStateRepository.SaveLauncherStateAsync(_state);
         }
 
-        internal void OpenDiscordServer()
+        public TimeSpan GetInjectionDelay()
+        {
+            return _state.InjectionDelay;
+        }
+
+        public async Task SetInjectionDelayAsync(TimeSpan injectionDelay)
+        {
+            _state.InjectionDelay = injectionDelay;
+            await _launcherStateRepository.SaveLauncherStateAsync(_state);
+        }
+
+        public void OpenDiscordServer()
         {
             Process.Start(
                 new ProcessStartInfo(_state.DiscordUrl)

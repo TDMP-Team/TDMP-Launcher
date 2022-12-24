@@ -46,6 +46,9 @@ namespace TeardownMultiplayerLauncher
             _playButton.IsEnabled = isGameVersionSupported == true;
 
             _teardownMultiplayerVersionLabel.Content = $"TDMP v{_coreApi.GetInstalledTeardownMultiplayerVersion()}";
+
+            _injectionDelaySlider.Value = _coreApi.GetInjectionDelay().TotalSeconds;
+            _injectionDelayLabel.Content = $"{_coreApi.GetInjectionDelay().TotalSeconds} Seconds";
         }
 
         private async void _teardownFolderBrowseButton_Click(object sender, RoutedEventArgs e)
@@ -98,6 +101,12 @@ namespace TeardownMultiplayerLauncher
         private void _discordGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _coreApi.OpenDiscordServer();
+        }
+
+        private async void _injectionDelaySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            await _coreApi.SetInjectionDelayAsync(TimeSpan.FromSeconds(e.NewValue));
+            UpdateForm();
         }
     }
 }

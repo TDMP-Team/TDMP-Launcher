@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Teardown Multiplayer" Width="640" Height="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico" Loaded="Window_Loaded">
+        Title="Teardown Multiplayer" Width="640" SizeToContent="Height" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico" Loaded="Window_Loaded">
     <Grid>
         <Grid x:Name="_launcherMainGrid">
             <Grid Height="150" VerticalAlignment="Top">
@@ -33,14 +33,22 @@
             <materialDesign:Card Margin="20,170,20,20" Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
                 <Grid>
                     <Label x:Name="_versionSupportLabel" Content="SELECT YOUR TEARDOWN.EXE" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFA9A300" FontSize="10"/>
-                    <StackPanel Margin="10,10,10,80">
+                    <StackPanel Margin="10,10,10,10" ClipToBounds="False">
                         <Label Content="TEARDOWN.EXE PATH" FontWeight="Bold" Padding="0,0,0,10"/>
                         <StackPanel Orientation="Horizontal" >
                             <Button x:Name="_teardownFolderBrowseButton" Content="Browse..." Click="_teardownFolderBrowseButton_Click" />
                             <Label x:Name="_teardownFolderTextBox" Margin="10,0,0,0" VerticalContentAlignment="Center" />
                         </StackPanel>
+
+                        <Label Content="INJECTION DELAY" FontWeight="Bold" Padding="0,15,0,0"/>
+                        <Label Content="Increase this if your game takes a while to load and experiences crashes when injecting too early." Margin="0,0,0,10" Foreground="{DynamicResource MaterialDesignBodyLight}" VerticalContentAlignment="Center" Padding="0,0,0,0" FontSize="10"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,00,0,0">
+                            <Slider x:Name="_injectionDelaySlider" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" ValueChanged="_injectionDelaySlider_ValueChanged" IsSnapToTickEnabled="True" Maximum="60" SmallChange="1"/>
+                            <Label x:Name="_injectionDelayLabel" Content="X Seconds" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <Button x:Name="_playButton" Content="PLAY" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="35" Height="50" Margin="0,20,0,10" Click="_playButton_Click" IsEnabled="False"/>
                     </StackPanel>
-                    <Button x:Name="_playButton" Content="PLAY" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="35" Height="50" Margin="0,0,0,25" Click="_playButton_Click" IsEnabled="False"/>
                 </Grid>
             </materialDesign:Card>
             <Grid Margin="20,0,20,0" Height="20" VerticalAlignment="Bottom">
