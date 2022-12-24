@@ -18,7 +18,7 @@ namespace TeardownMultiplayerLauncher.Core
             _launcherStateRepository = new LauncherStateRepository();
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
-            _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state.TeardownMultiplayerUpdateState);
+            _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
         }
 
         public async Task LaunchTeardownMultiplayer()
