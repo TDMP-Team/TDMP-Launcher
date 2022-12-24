@@ -63,7 +63,7 @@ namespace TeardownMultiplayerLauncher.Core.Services
                     throw new Exception("Could not find running Teardown process");
                 }
 
-                Thread.Sleep(_state.InjectionDelay.Milliseconds); // TODO: Reliably check memory if Teardown Game object is initialized. Slower PCs might take longer for Teardown to fully initialize and be ready to inject into.
+                Thread.Sleep(_state.InjectionDelay); // TODO: Reliably check memory if Teardown Game object is initialized. Slower PCs might take longer for Teardown to fully initialize and be ready to inject into.
                 if (!InjectTeardownMultiplayer(teardownProcess))
                 {
                     throw new Exception("Failed to inject TDMP");
