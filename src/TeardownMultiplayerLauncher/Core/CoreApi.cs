@@ -10,9 +10,7 @@ using Gameloop.Vdf;
 using System.IO;
 using Gameloop.Vdf.Linq;
 using System.Linq;
-using TeardownMultiplayerLauncher.Core.Models;
 using Gameloop.Vdf.JsonConverter;
-using Newtonsoft.Json.Linq;
 
 namespace TeardownMultiplayerLauncher.Core
 {
