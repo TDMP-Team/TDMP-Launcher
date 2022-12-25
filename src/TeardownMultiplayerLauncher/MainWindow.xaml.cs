@@ -139,7 +139,7 @@ namespace TeardownMultiplayerLauncher
         {
             if (!languageCodeMap.ContainsValue(_coreApi.GetLanguage()))
             {
-                _coreApi.SetLanguage("en");
+                _coreApi.SetLanguageAsync("en");
             }
             await LoadLanguage();
             InitializeLauncherVersionLabel();
@@ -172,7 +172,7 @@ namespace TeardownMultiplayerLauncher
             if (item == null || item.Content == null || item.Content.ToString() == "") return;
             if (languageCodeMap[item.Content.ToString()] == _coreApi.GetLanguage()) return;
             //System.Windows.Controls.ComboBox box = (System.Windows.Controls.ComboBox)sender;
-            _coreApi.SetLanguage(languageCodeMap[item.Content.ToString()]);
+            _coreApi.SetLanguageAsync(languageCodeMap[item.Content.ToString()]);
             LanguageChanged();
         }
     }
