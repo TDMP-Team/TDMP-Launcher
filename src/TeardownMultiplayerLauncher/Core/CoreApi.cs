@@ -31,37 +31,13 @@ namespace TeardownMultiplayerLauncher.Core
             // Only do this check if there isn't an already selected path
             if (_state.TeardownExePath == null || _state.TeardownExePath.Length == 0)
             {
-                if (!await TryGetTeardownPathAsync("SOFTWARE\\Valve\\Steam"))
+                string? teardownPath = await DetectTeardownPathUtility.TryGetTeardownPathAsync("SOFTWARE\\Valve\\Steam");
+                if (teardownPath == null)
                 {
-                    await TryGetTeardownPathAsync("SOFTWARE\\Wow6432Node\\Valve\\Steam");
+                    teardownPath = await DetectTeardownPathUtility.TryGetTeardownPathAsync("SOFTWARE\\Wow6432Node\\Valve\\Steam");
                 }
+                await SetTeardownExePathAsync(teardownPath);
             }
-        }
-
-        public async Task<bool> TryGetTeardownPathAsync(string regKey)
-        {
-            RegistryKey? key = Registry.LocalMachine.OpenSubKey(regKey);
-            if (key != null)
-            {
-                object? o = key.GetValue("InstallPath");
-                if (o != null)
-                {
-                    VProperty volvo = VdfConvert.Deserialize(File.ReadAllText(o.ToString() + "/config/libraryfolders.vdf"));
-                    foreach(var location in volvo.Value.ToList())
-                    {
-                        foreach (var item in location.ToJson().Children())
-                        {
-                            string installPath = item.SelectToken("path").ToString();
-                            if (Directory.Exists(installPath + "\\steamapps\\common\\Teardown"))
-                            {
-                                await SetTeardownExePathAsync(installPath + "\\steamapps\\common\\Teardown\\teardown.exe");
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-            return false;
         }
 
         public async Task LaunchTeardownMultiplayer()
