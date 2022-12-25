@@ -17,6 +17,7 @@ namespace TeardownMultiplayerLauncher.Core
 
         public async Task InitializeAsync()
         {
+            Debug.WriteLine(System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
             _launcherStateRepository = new LauncherStateRepository();
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
@@ -31,6 +32,17 @@ namespace TeardownMultiplayerLauncher.Core
         public string GetTeardownExePath()
         {
             return _state.TeardownExePath;
+        }
+
+        public string GetLanguage()
+        {
+            return _state.SelectedLanguage;
+        }
+
+        public async void SetLanguage(string language)
+        {
+            _state.SelectedLanguage = language;
+            await _launcherStateRepository.SaveLauncherStateAsync(_state);
         }
 
         public async Task SetTeardownExePathAsync(string path)

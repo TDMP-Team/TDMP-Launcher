@@ -21,5 +21,8 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
 
         [JsonProperty("teardown_multiplayer_update_state")]
         public TeardownMultiplayerUpdateState TeardownMultiplayerUpdateState { get; set; } = new TeardownMultiplayerUpdateState();
+
+        [JsonProperty("selected_language")]
+        public String SelectedLanguage { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
     }
 }
