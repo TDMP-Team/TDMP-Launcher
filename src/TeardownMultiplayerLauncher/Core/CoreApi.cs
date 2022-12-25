@@ -27,9 +27,14 @@ namespace TeardownMultiplayerLauncher.Core
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
-            if(!await TryGetTeardownPathAsync("SOFTWARE\\Valve\\Steam"))
+
+            // Only do this check if there isn't an already selected path
+            if (_state.TeardownExePath == null || _state.TeardownExePath.Length == 0)
             {
-                await TryGetTeardownPathAsync("SOFTWARE\\Wow6432Node\\Valve\\Steam");
+                if (!await TryGetTeardownPathAsync("SOFTWARE\\Valve\\Steam"))
+                {
+                    await TryGetTeardownPathAsync("SOFTWARE\\Wow6432Node\\Valve\\Steam");
+                }
             }
         }
 
