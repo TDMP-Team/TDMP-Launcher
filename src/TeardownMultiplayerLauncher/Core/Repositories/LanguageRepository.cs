@@ -10,10 +10,10 @@ namespace TeardownMultiplayerLauncher.Core.Repositories
     {
         private static readonly string LanguageFilePath = "lang/lang-{0}.json";
 
-        public static async Task<LanguageTranslations> GetLanguage(string languageCode)
+        public static async Task<LanguageTranslations> GetLanguageAsync(string languageCode)
         {
             await EnsureLanguageFileExistsAsync(languageCode);
-            LanguageTranslations languageTranslations = JsonConvert.DeserializeObject<LanguageTranslations>(await File.ReadAllTextAsync(string.Format(LanguageFilePath, languageCode)));
+            var languageTranslations = JsonConvert.DeserializeObject<LanguageTranslations>(await File.ReadAllTextAsync(string.Format(LanguageFilePath, languageCode)));
             return languageTranslations;
         }
 

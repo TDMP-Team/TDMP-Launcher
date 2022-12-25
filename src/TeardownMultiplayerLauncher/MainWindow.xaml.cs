@@ -35,7 +35,7 @@ namespace TeardownMultiplayerLauncher
 
         private async Task LoadLanguage()
         {
-            translations = await LanguageRepository.GetLanguage(_coreApi.GetLanguage());
+            translations = await LanguageRepository.GetLanguageAsync(_coreApi.GetLanguage());
         }
 
         private void InitializeLauncherVersionLabel()

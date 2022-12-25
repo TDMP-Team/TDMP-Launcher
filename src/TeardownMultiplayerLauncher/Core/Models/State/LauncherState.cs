@@ -23,6 +23,6 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
         public TeardownMultiplayerUpdateState TeardownMultiplayerUpdateState { get; set; } = new TeardownMultiplayerUpdateState();
 
         [JsonProperty("selected_language")]
-        public String SelectedLanguage { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        public string SelectedLanguage { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
     }
 }
