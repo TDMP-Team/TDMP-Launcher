@@ -1,10 +1,18 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Repositories;
 using TeardownMultiplayerLauncher.Core.Services;
 using TeardownMultiplayerLauncher.Core.Utilities;
+using Gameloop.Vdf;
+using System.IO;
+using Gameloop.Vdf.Linq;
+using System.Linq;
+using TeardownMultiplayerLauncher.Core.Models;
+using Gameloop.Vdf.JsonConverter;
+using Newtonsoft.Json.Linq;
 
 namespace TeardownMultiplayerLauncher.Core
 {
@@ -21,6 +29,36 @@ namespace TeardownMultiplayerLauncher.Core
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
+            if(!await TryGetTeardownPathAsync("SOFTWARE\\Valve\\Steam"))
+            {
+                await TryGetTeardownPathAsync("SOFTWARE\\Wow6432Node\\Valve\\Steam");
+            }
+        }
+
+        public async Task<bool> TryGetTeardownPathAsync(string regKey)
+        {
+            RegistryKey? key = Registry.LocalMachine.OpenSubKey(regKey);
+            if (key != null)
+            {
+                object? o = key.GetValue("InstallPath");
+                if (o != null)
+                {
+                    VProperty volvo = VdfConvert.Deserialize(File.ReadAllText(o.ToString() + "/config/libraryfolders.vdf"));
+                    foreach(var location in volvo.Value.ToList())
+                    {
+                        foreach (var item in location.ToJson().Children())
+                        {
+                            string installPath = item.SelectToken("path").ToString();
+                            if (Directory.Exists(installPath + "\\steamapps\\common\\Teardown"))
+                            {
+                                await SetTeardownExePathAsync(installPath + "\\steamapps\\common\\Teardown\\teardown.exe");
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         public async Task LaunchTeardownMultiplayer()
