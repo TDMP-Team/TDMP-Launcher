@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using TeardownMultiplayerLauncher.Core.Models.State;
@@ -12,15 +13,28 @@ namespace TeardownMultiplayerLauncher.Core.Repositories
         public async Task<LauncherState> GetLauncherStateAsync()
         {
             await EnsureLauncherStateFileExistsAsync();
-            var launcherState = JsonConvert.DeserializeObject<LauncherState>(await File.ReadAllTextAsync(LauncherStateFilePath));
-            return launcherState.LauncherStateVersion == LauncherState.CurrentLauncherStateVersion ? launcherState : new LauncherState();
+            try
+            {
+                var launcherState = JsonConvert.DeserializeObject<LauncherState>(await File.ReadAllTextAsync(LauncherStateFilePath));
+                return launcherState.LauncherStateVersion == LauncherState.CurrentLauncherStateVersion ? launcherState : new LauncherState();
+            } catch(Exception ex) when (ex is JsonReaderException||
+                                        ex is NullReferenceException)
+            {
+                return new LauncherState();
+            }
         }
 
         public async Task SaveLauncherStateAsync(LauncherState state)
         {
             await EnsureLauncherStateFileExistsAsync();
             state.LauncherStateVersion = LauncherState.CurrentLauncherStateVersion;
-            await File.WriteAllTextAsync(LauncherStateFilePath, JsonConvert.SerializeObject(state));
+            try
+            {
+                await File.WriteAllTextAsync(LauncherStateFilePath, JsonConvert.SerializeObject(state));
+            } catch(IOException)
+            {
+                return;
+            }
         }
 
         private async Task EnsureLauncherStateFileExistsAsync()

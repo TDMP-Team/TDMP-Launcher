@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TeardownMultiplayerLauncher.Core.Models;
 using TeardownMultiplayerLauncher.Core.Models.State;
@@ -20,6 +21,13 @@ namespace TeardownMultiplayerLauncher.Core.Services
 
         public Task<LocaleData> GetLocaleDataAsync(string cultureCode)
         {
+            IEnumerable<string> supportedCodes = GetSupportedCultureCodes();
+            if (!supportedCodes.Contains(cultureCode))
+            {
+                _state.SelectedCultureCode = supportedCodes.First();
+                _ = new LauncherStateRepository().SaveLauncherStateAsync(_state);
+                return _localeDataRepository.GetLocaleDataAsync(supportedCodes.First());
+            }
             return _localeDataRepository.GetLocaleDataAsync(cultureCode);
         }
 

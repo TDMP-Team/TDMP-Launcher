@@ -54,6 +54,9 @@
     <None Update="Locales\en.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Locales\pl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Locales\ru.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

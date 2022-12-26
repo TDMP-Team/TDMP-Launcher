@@ -1,0 +1,22 @@
+﻿{
+    "culture_code": "pl",
+    "name":  "Polski",
+    "strings": {
+        "title": "Teardown Multiplayer",
+        "join_discord": "Dołącz do Discorda!",
+        "teardown_path": "ŚCIEŻKA TEARDOWN.EXE",
+        "select_teardown": "WYBIERZ TEARDOWN.EXE",
+        "teardown_invalid": "WYBRANA WERSJA TEARDOWN NIE JEST OBSŁUGIWANA (wymagana {0})",
+        "teardown_valid": "WYBRANA WERSJA TEARDOWN JEST OBSŁUGIWANA",
+        "select_teardown_dialog": "Wybierz teardown.exe",
+        "injection_delay_title": "OPÓŹNIENIE WSTRZYKIWANIA",
+        "injection_delay_description": "Zwiększ jeżeli gra włącza się dłużej lub występują zawieszenia przez wsktrzyknięcie zbyt wcześnie\\późno.",
+        "seconds": "{0} Sekund(y)",
+        "play_button": "GRAJ",
+        "updating_tdmp": "AKTUALIZOWANIE TDMP",
+        "game_running": "URUCHOMIONO GRĘ",
+        "launch_error": "Wystąpił błąd podczas uruchamiania gry. Jeżeli błąd sie powtarza, skontaktuj się z pomocą techniczną na Discordzie:\n\n{0}",
+        "launcher_version": "Program uruchamiający TDMP v{0}",
+        "browse": "WYBIERZ..."
+    }
+}

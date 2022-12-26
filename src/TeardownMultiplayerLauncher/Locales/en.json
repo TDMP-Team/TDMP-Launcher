@@ -11,7 +11,7 @@
         "select_teardown_dialog": "Please select your teardown.exe",
         "injection_delay_title": "INJECTION DELAY",
         "injection_delay_description": "Increase this if your game takes a while to load and experiences crashes when injecting too early.",
-        "seconds": "{0} Seconds",
+        "seconds": "{0} Second(s)",
         "play_button": "PLAY",
         "updating_tdmp": "UPDATING TDMP",
         "game_running": "GAME RUNNING",

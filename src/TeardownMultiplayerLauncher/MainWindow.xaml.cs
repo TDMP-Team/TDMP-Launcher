@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -88,6 +89,12 @@ namespace TeardownMultiplayerLauncher
             cultureCode ??= _coreApi.GetSelectedCultureCode();
             await _coreApi.SetSelectedCultureCodeAsync(cultureCode);
             _currentLocaleData = await _coreApi.GetLocaleDataAsync(cultureCode);
+
+            if(!_coreApi.GetSupportedCultureCodes().Contains(cultureCode))
+            {
+                _localeComboBox.SelectedIndex = 0;
+                return;
+            }
 
             for (var index = 0; index < _localeComboBox.Items.Count; ++index)
             {
