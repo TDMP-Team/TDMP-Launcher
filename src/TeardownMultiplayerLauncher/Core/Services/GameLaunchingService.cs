@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Utilities;
 
@@ -86,7 +86,18 @@ namespace TeardownMultiplayerLauncher.Core.Services
             }
             catch
             {
-                teardownProcess.Kill();
+                try
+                {
+                    teardownProcess.Kill();
+                }
+                catch
+                {
+                    MessageBox.Show(
+                        "Teardown could not shut down and is still running in the backround. Please wait a few minutes for your OS to clear it",
+                        "TDMP Launcher"
+                    );
+                    return false;
+                }
                 return false;
             }
         }
