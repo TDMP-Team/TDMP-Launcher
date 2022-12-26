@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TeardownMultiplayerLauncher.Core.Models;
 using TeardownMultiplayerLauncher.Core.Models.State;
@@ -18,9 +19,22 @@ namespace TeardownMultiplayerLauncher.Core.Services
             _localeDataRepository = new LocaleDataRepository();
         }
 
-        public Task<LocaleData> GetLocaleDataAsync(string cultureCode)
+        /// <summary>
+        /// Gets the locale data for a specified cultureCode.
+        /// If the culture isn't supported, the first available locale data will be provided.
+        /// </summary>
+        /// <param name="cultureCode">ISO 639-1 two letter culture code.</param>
+        /// <returns>LocaleData for specified culture code, or fallback to first available locale data if specified culture is unavailable.</returns>
+        public async Task<LocaleData> GetLocaleDataAsync(string cultureCode)
         {
-            return _localeDataRepository.GetLocaleDataAsync(cultureCode);
+            IEnumerable<string> supportedCultureCodes = GetSupportedCultureCodes();
+            if (!supportedCultureCodes.Contains(cultureCode))
+            {
+                _state.SelectedCultureCode = supportedCultureCodes.First();
+                await new LauncherStateRepository().SaveLauncherStateAsync(_state);
+                return await _localeDataRepository.GetLocaleDataAsync(supportedCultureCodes.First());
+            }
+            return await _localeDataRepository.GetLocaleDataAsync(cultureCode);
         }
 
         /// <summary>

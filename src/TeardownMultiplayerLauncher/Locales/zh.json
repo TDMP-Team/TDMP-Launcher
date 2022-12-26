@@ -1,0 +1,22 @@
+{
+    "culture_code": "zh",
+    "name": "简体中文",
+    "strings": {
+        "title": "Teardown Multiplayer",
+        "join_discord": "加入Discord！",
+        "teardown_path": "TEARDOWN.EXE路径",
+        "select_teardown": "选择您的TEARDOWN.EXE",
+        "teardown_invalid": "不支持当前TEARDOWN版本（需要版本{0}）",
+        "teardown_valid": "支持当前TEARDOWN版本",
+        "select_teardown_dialog": "请选择您的teardown.exe",
+        "injection_delay_title": "注入延迟",
+        "injection_delay_description": "如果您的游戏启动时间过长，并因注入过早导致游戏崩溃，请考虑延长注入延迟。",
+        "seconds": "{0}秒",
+        "play_button": "开始",
+        "updating_tdmp": "正在更新TDMP",
+        "game_running": "游戏运行中",
+        "launch_error": "在启动游戏时出现了一个错误，如果该错误持续发生，请在Discord里联系支持人员：\n\n{0}",
+        "launcher_version": "TDMP启动器v{0}",
+        "browse": "浏览..."
+    }
+}
