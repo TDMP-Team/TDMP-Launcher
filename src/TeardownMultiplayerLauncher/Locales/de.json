@@ -1,0 +1,22 @@
+{
+    "culture_code": "de",
+    "name":  "Deutsch",
+    "strings": {
+        "title": "Teardown Multiplayer",
+        "join_discord": "Trete den Discord bei!",
+        "teardown_path": "TEARDOWN.EXE PFAD",
+        "select_teardown": "WÄHLE DEINE TEARDOWN.EXE DATEI",
+        "teardown_invalid": "TEARDOWN VERSION NICHT UNTERSTÜZT (benötigt {0})",
+        "teardown_valid": "TEARDOWN VERSION UNTERSTÜZT",
+        "select_teardown_dialog": "Bitte wähle deine teardown.exe Datei aus",
+        "injection_delay_title": "INJEKTIONSVERZÖGERUNG",
+        "injection_delay_description": "Erhöhe diesen Wert, wenn das Spiel lange zum Laden benötigt und bei zu früher Injektion abstürzt.",
+        "seconds": "{0} Sekunde(n)",
+        "play_button": "SPIELEN",
+        "updating_tdmp": "TDMP wird aktualisiert",
+        "game_running": "SPIEL Läuft!",
+        "launch_error": "Beim Starten des Spiels ist ein Fehler aufgetreten. Wenn das Problem weiterhin besteht, wende dich bitte an den Support im Discord:\n\n{0}",
+        "launcher_version": "TDMP Launcher v{0}",
+        "browse": "Durchsuchen..."
+    }
+}
