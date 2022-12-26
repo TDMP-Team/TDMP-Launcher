@@ -1,0 +1,48 @@
+﻿<Window x:Class="LauncherUpdater.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LauncherUpdater"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        Background="{DynamicResource MaterialDesignDarkBackground}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        x:Name="_updaterMainWindow"
+        Title="Teardown Multiplayer" Width="640" SizeToContent="Height" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico" Loaded="Window_Loaded">
+    <Grid>
+        <Grid x:Name="_launcherMainGrid" Margin="0,0,0,0">
+            <materialDesign:Card Margin="20,20,20,20" Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+                <Grid>
+                    <StackPanel Margin="10,10,10,10" ClipToBounds="False">
+                        <Label x:Name="_activeStateDescription" FontSize="16" Content="{Binding StatusText, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" FontWeight="Bold" Padding="5,15,0,15"/>
+                        <ProgressBar x:Name="_updateProgressBar"
+                                     Value="{Binding PercentageChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}"
+                                     Height="10"
+                                     Margin="5,0,0,10"
+                                     Width="auto"
+                                     Background="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+                                     BorderBrush="{DynamicResource MaterialDesignTextBoxBorder}"
+                                     Foreground="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                                     ToolTip="Progress of the current operation.">
+                        </ProgressBar>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+            <Grid Margin="20,0,20,0" Height="20" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300*"/>
+                    <ColumnDefinition Width="41*"/>
+                    <ColumnDefinition Width="259*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="_updaterVersionLabel" Content="TDMP Updater vx.x.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

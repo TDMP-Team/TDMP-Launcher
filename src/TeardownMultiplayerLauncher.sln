@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeardownMultiplayerLauncher", "TeardownMultiplayerLauncher\TeardownMultiplayerLauncher.csproj", "{898322DD-D26A-47CC-9449-7D01AB487D37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeardownMultiplayerLauncher", "TeardownMultiplayerLauncher\TeardownMultiplayerLauncher.csproj", "{898322DD-D26A-47CC-9449-7D01AB487D37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LauncherUpdater", "LauncherUpdater\LauncherUpdater.csproj", "{3E6F7086-E956-4DCC-82E4-FFB25E792F4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{898322DD-D26A-47CC-9449-7D01AB487D37}.Debug|x64.Build.0 = Debug|x64
 		{898322DD-D26A-47CC-9449-7D01AB487D37}.Release|x64.ActiveCfg = Release|x64
 		{898322DD-D26A-47CC-9449-7D01AB487D37}.Release|x64.Build.0 = Release|x64
+		{3E6F7086-E956-4DCC-82E4-FFB25E792F4B}.Debug|x64.ActiveCfg = Debug|x64
+		{3E6F7086-E956-4DCC-82E4-FFB25E792F4B}.Debug|x64.Build.0 = Debug|x64
+		{3E6F7086-E956-4DCC-82E4-FFB25E792F4B}.Release|x64.ActiveCfg = Release|x64
+		{3E6F7086-E956-4DCC-82E4-FFB25E792F4B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
