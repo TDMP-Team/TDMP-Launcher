@@ -21,6 +21,7 @@ namespace TeardownMultiplayerLauncher.Core
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
+            await DetectAndSetTeardownExePathAsync();
         }
 
         public async Task LaunchTeardownMultiplayer()
@@ -86,6 +87,18 @@ namespace TeardownMultiplayerLauncher.Core
                     Verb = "open",
                 }
             );
+        }
+
+        private async Task DetectAndSetTeardownExePathAsync()
+        {
+            if (string.IsNullOrWhiteSpace(GetTeardownExePath()))
+            {
+                var maybeTeardownExePath = TeardownPathDetectionUtility.MaybeGetTeardownExePath();
+                if (!string.IsNullOrWhiteSpace(maybeTeardownExePath))
+                {
+                    await SetTeardownExePathAsync(maybeTeardownExePath);
+                }
+            }
         }
     }
 }
