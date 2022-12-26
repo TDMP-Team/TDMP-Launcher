@@ -1,22 +1,22 @@
 {
-    "culture_code": "sv",
-    "name":  "Svenska",
-    "strings": {
-        "title": "Teardown Multiplayer",
-        "join_discord": "Gå med i Discord!",
-        "teardown_path": "TEARDOWN.EXE SÖKVÄG",
-        "select_teardown": "VÄLJ DIN TEARDOWN.EXE",
-        "teardown_invalid": "TEARDOWNS VERSION STÖDS INTE (kräver {0})",
-        "teardown_valid": "TEARDOWNS VERSION STÖDS",
-        "select_teardown_dialog": "Välj din teardown.exe",
-        "injection_delay_title": "INJEKTIONS FÖRSÖJNING",
-        "injection_delay_description": "Öka detta om ditt spel tar ett tag att ladda och upplever kraschar när du injicerar för tidigt.",
-        "seconds": "{0} Sekunder",
-        "play_button": "SPELA",
-        "updating_tdmp": "UPDATERAR TDMP",
-        "game_running": "SPELET KÖRS",
-        "launch_error": "Ett fel uppstod när spelet startade. Om problemet kvarstår, kontakta hjälp i Discord:\n\n{0}",
-        "launcher_version": "TDMP Launcher v{0}",
-        "browse": "Bläddra..."
-    }
+  "culture_code": "sv",
+  "name": "Svenska",
+  "strings": {
+    "title": "Teardown Multiplayer",
+    "join_discord": "Gå med i Discord!",
+    "teardown_path": "TEARDOWN.EXE SÖKVÄG",
+    "select_teardown": "VÄLJ DIN TEARDOWN.EXE",
+    "teardown_invalid": "TEARDOWNS VERSION STÖDS INTE (kräver {0})",
+    "teardown_valid": "TEARDOWNS VERSION STÖDS",
+    "select_teardown_dialog": "Välj din teardown.exe",
+    "injection_delay_title": "INJEKTIONSFÖRSENING",
+    "injection_delay_description": "Öka detta om ditt spel tar ett tag att ladda och upplever kraschar när du injicerar för tidigt.",
+    "seconds": "{0} Sekunder",
+    "play_button": "SPELA",
+    "updating_tdmp": "UPDATERAR TDMP",
+    "game_running": "SPELET KÖRS",
+    "launch_error": "Ett fel uppstod när spelet startade. Om problemet kvarstår, kontakta hjälp i Discord:\n\n{0}",
+    "launcher_version": "TDMP Launcher v{0}",
+    "browse": "Bläddra..."
+  }
 }
