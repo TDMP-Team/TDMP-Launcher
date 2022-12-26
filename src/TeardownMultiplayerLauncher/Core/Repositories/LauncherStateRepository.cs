@@ -17,8 +17,11 @@ namespace TeardownMultiplayerLauncher.Core.Repositories
             {
                 var launcherState = JsonConvert.DeserializeObject<LauncherState>(await File.ReadAllTextAsync(LauncherStateFilePath));
                 return launcherState.LauncherStateVersion == LauncherState.CurrentLauncherStateVersion ? launcherState : new LauncherState();
-            } catch(Exception ex) when (ex is JsonReaderException||
-                                        ex is NullReferenceException)
+            }
+            catch (Exception ex) when (
+                ex is JsonReaderException ||
+                ex is NullReferenceException
+            )
             {
                 return new LauncherState();
             }
@@ -31,9 +34,10 @@ namespace TeardownMultiplayerLauncher.Core.Repositories
             try
             {
                 await File.WriteAllTextAsync(LauncherStateFilePath, JsonConvert.SerializeObject(state));
-            } catch(IOException)
+            }
+            catch (IOException)
             {
-                return;
+                return; // TODO: When we add logging, we should log when this exception gets swallowed.
             }
         }
 

@@ -10,7 +10,7 @@ namespace TeardownMultiplayerLauncher.Core.Repositories
     internal class LocaleDataRepository
     {
         public static readonly string LocalesDirectory = "Locales/";
-        private static bool shownLocaleError = false;
+        private static bool _wasLocaleErrorShown;
 
         public async Task<LocaleData> GetLocaleDataAsync(string cultureCode)
         {
@@ -21,11 +21,13 @@ namespace TeardownMultiplayerLauncher.Core.Repositories
                 return JsonConvert.DeserializeObject<LocaleData>(
                     await File.ReadAllTextAsync(localeDataFilePath)
                 );
-            } catch (JsonReaderException)
+            }
+            catch (JsonReaderException)
             {
-                if(!shownLocaleError) { 
+                if (!_wasLocaleErrorShown)
+                {
                     MessageBox.Show($"A severe error was detected in the {cultureCode}.json locale file. Please reinstall your launcher.", "Teardown Multiplayer", MessageBoxButton.OK, MessageBoxImage.Error);
-                    shownLocaleError = true;
+                    _wasLocaleErrorShown = true;
                 }
                 return new LocaleData();
             }
