@@ -4,13 +4,12 @@ using Gameloop.Vdf;
 using Microsoft.Win32;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace TeardownMultiplayerLauncher.Core.Utilities
 {
-    public class DetectTeardownPathUtility
+    public class TeardownPathDetectionUtility
     {
-        public static async Task<string?> TryGetTeardownPathAsync(string regKey)
+        public static string? TryGetTeardownPath(string regKey)
         {
             RegistryKey? key = Registry.LocalMachine.OpenSubKey(regKey);
             if (key != null)
