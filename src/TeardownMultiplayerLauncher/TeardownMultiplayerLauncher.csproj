@@ -20,6 +20,14 @@
     <PackageTags>teardown;teardown multiplayer;tdmp;multiplayer;</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="icon.ico" />
     <None Remove="Resources\discord.png" />
