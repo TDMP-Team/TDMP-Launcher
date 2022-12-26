@@ -36,10 +36,10 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
                     {
                         foreach (var item in location.ToJson().Children())
                         {
-                            string installPath = item.SelectToken("path").ToString();
-                            if (Directory.Exists(installPath + "\\steamapps\\common\\Teardown"))
+                            string installPath = item.SelectToken("path").ToString() + "\\steamapps\\common\\Teardown\\teardown.exe";
+                            if (File.Exists(installPath))
                             {
-                                return installPath + "\\steamapps\\common\\Teardown\\teardown.exe";
+                                return installPath;
                             }
                         }
                     }
