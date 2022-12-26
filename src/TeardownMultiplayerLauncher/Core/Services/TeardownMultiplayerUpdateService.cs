@@ -63,9 +63,9 @@ namespace TeardownMultiplayerLauncher.Core.Services
             return zipFilePath;
         }
 
-        private async Task UninstallCurrentReleaseAsync(string teardownDirectory)
+        private Task UninstallCurrentReleaseAsync(string teardownDirectory)
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
                 // Remove TDMP folders. This is required in case if files was removed or something unexpected happened.
                 var tdmpModsDirectory = Path.Combine(teardownDirectory, "mods/TDMP");
@@ -96,9 +96,9 @@ namespace TeardownMultiplayerLauncher.Core.Services
             });
         }
 
-        private async Task InstallLatestReleaseFromZipAsync(string zipFilePath, string teardownDirectoryPath)
+        private Task InstallLatestReleaseFromZipAsync(string zipFilePath, string teardownDirectoryPath)
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
                 using ZipArchive zipArchive = ZipFile.OpenRead(zipFilePath);
                 foreach (var zipEntry in zipArchive.Entries)

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using TeardownMultiplayerLauncher.Core.Models;
 using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Repositories;
 using TeardownMultiplayerLauncher.Core.Services;
@@ -13,6 +15,7 @@ namespace TeardownMultiplayerLauncher.Core
         private LauncherStateRepository? _launcherStateRepository;
         private GameLaunchingService? _gameLaunchingService;
         private TeardownMultiplayerUpdateService? _teardownMultiplayerUpdateService;
+        private LocalizationService? _localizationService;
         private LauncherState? _state;
 
         public async Task InitializeAsync()
@@ -21,12 +24,13 @@ namespace TeardownMultiplayerLauncher.Core
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
+            _localizationService = new LocalizationService(_state);
             await DetectAndSetTeardownExePathAsync();
         }
 
-        public async Task LaunchTeardownMultiplayer()
+        public Task LaunchTeardownMultiplayer()
         {
-            await _gameLaunchingService.LaunchTeardownMultiplayerAsync();
+            return _gameLaunchingService.LaunchTeardownMultiplayerAsync();
         }
 
         public string GetTeardownExePath()
@@ -34,10 +38,31 @@ namespace TeardownMultiplayerLauncher.Core
             return _state.TeardownExePath;
         }
 
-        public async Task SetTeardownExePathAsync(string path)
+        public string GetSelectedCultureCode()
+        {
+            return _state.SelectedCultureCode;
+        }
+
+        public Task SetSelectedCultureCodeAsync(string cultureCode)
+        {
+            _state.SelectedCultureCode = cultureCode;
+            return _launcherStateRepository.SaveLauncherStateAsync(_state);
+        }
+
+        public Task<LocaleData> GetLocaleDataAsync(string cultureCode)
+        {
+            return _localizationService.GetLocaleDataAsync(cultureCode);
+        }
+
+        public IEnumerable<string> GetSupportedCultureCodes()
+        {
+            return _localizationService.GetSupportedCultureCodes();
+        }
+
+        public Task SetTeardownExePathAsync(string path)
         {
             _state.TeardownExePath = path.Trim();
-            await _launcherStateRepository.SaveLauncherStateAsync(_state);
+            return _launcherStateRepository.SaveLauncherStateAsync(_state);
         }
 
         public string GetSupportedTeardownVersion()
@@ -72,10 +97,10 @@ namespace TeardownMultiplayerLauncher.Core
             return _state.InjectionDelay;
         }
 
-        public async Task SetInjectionDelayAsync(TimeSpan injectionDelay)
+        public Task SetInjectionDelayAsync(TimeSpan injectionDelay)
         {
             _state.InjectionDelay = injectionDelay;
-            await _launcherStateRepository.SaveLauncherStateAsync(_state);
+            return _launcherStateRepository.SaveLauncherStateAsync(_state);
         }
 
         public void OpenDiscordServer()

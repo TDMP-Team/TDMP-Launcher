@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Globalization;
 
 namespace TeardownMultiplayerLauncher.Core.Models.State
 {
@@ -21,5 +22,11 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
 
         [JsonProperty("teardown_multiplayer_update_state")]
         public TeardownMultiplayerUpdateState TeardownMultiplayerUpdateState { get; set; } = new TeardownMultiplayerUpdateState();
+
+        /// <summary>
+        /// ISO 639-1 two letter culture code.
+        /// </summary>
+        [JsonProperty("selected_culture_code")]
+        public string SelectedCultureCode { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
     }
 }
