@@ -1,16 +1,10 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using TeardownMultiplayerLauncher.Core.Models.State;
 using TeardownMultiplayerLauncher.Core.Repositories;
 using TeardownMultiplayerLauncher.Core.Services;
 using TeardownMultiplayerLauncher.Core.Utilities;
-using Gameloop.Vdf;
-using System.IO;
-using Gameloop.Vdf.Linq;
-using System.Linq;
-using Gameloop.Vdf.JsonConverter;
 
 namespace TeardownMultiplayerLauncher.Core
 {
