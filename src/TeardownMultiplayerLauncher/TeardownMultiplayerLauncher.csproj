@@ -10,7 +10,7 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <FileVersion></FileVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <AssemblyVersion>0.3.1</AssemblyVersion>
+    <AssemblyVersion>0.3.2</AssemblyVersion>
     <Title>Teardown Multiplayer Launcher</Title>
     <Company>TDMP Team</Company>
     <Product>Teardown Multiplayer Launcher</Product>
@@ -52,6 +52,9 @@
 
   <ItemGroup>
     <None Update="Locales\de.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Locales\hr.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Locales\it.json">

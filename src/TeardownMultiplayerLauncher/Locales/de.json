@@ -1,6 +1,6 @@
 {
     "culture_code": "de",
-    "name":  "Deutsch",
+    "name": "Deutsch",
     "strings": {
         "title": "Teardown Multiplayer",
         "join_discord": "Trete den Discord bei!",
@@ -14,7 +14,7 @@
         "seconds": "{0} Sekunde(n)",
         "play_button": "SPIELEN",
         "updating_tdmp": "TDMP wird aktualisiert",
-        "game_running": "SPIEL Läuft!",
+        "game_running": "SPIEL LÄUFT!",
         "launch_error": "Beim Starten des Spiels ist ein Fehler aufgetreten. Wenn das Problem weiterhin besteht, wende dich bitte an den Support im Discord:\n\n{0}",
         "launcher_version": "TDMP Launcher v{0}",
         "browse": "Durchsuchen..."

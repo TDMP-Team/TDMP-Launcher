@@ -1,0 +1,22 @@
+{
+    "culture_code": "hr",
+    "name": "Hrvatski",
+    "strings": {
+        "title": "Teardown Multiplayer",
+        "join_discord": "Pridružite se Discordu!",
+        "teardown_path": "TEARDOWN.EXE PUT",
+        "select_teardown": "ODABERITE SVOJ TEARDOWN.EXE",
+        "teardown_invalid": "TEARDOWN VERZIJA NIJE PODRŽANA (zahtijeva {0})",
+        "teardown_valid": "TEARDOWN VERZIJA PODRŽANA",
+        "select_teardown_dialog": "Odaberite svoj teardown.exe",
+        "injection_delay_title": "ODGODA UBACIVANJA",
+        "injection_delay_description": "Povećajte ovo ako vašoj igri treba neko vrijeme da se učita i dođe do rušenja pri preranom ubacivanju.",
+        "seconds": "{0} Sekundi",
+        "play_button": "IGRAJ",
+        "updating_tdmp": "AŽURIRANJE TDMP-a",
+        "game_running": "IGRA POKRENUTA",
+        "launch_error": "Došlo je do pogreške prilikom pokretanja igre. Ako se problem nastavi, obratite se podršci u Discordu:\n\n{0}",
+        "launcher_version": "TDMP Launcher v{0}",
+        "browse": "Pretraži..."
+    }
+}
