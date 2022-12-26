@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -26,6 +25,7 @@ namespace TeardownMultiplayerLauncher.Core
             _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
             _localizationService = new LocalizationService(_state);
+            await DetectAndSetTeardownExePathAsync();
         }
 
         public Task LaunchTeardownMultiplayer()
@@ -112,6 +112,18 @@ namespace TeardownMultiplayerLauncher.Core
                     Verb = "open",
                 }
             );
+        }
+
+        private async Task DetectAndSetTeardownExePathAsync()
+        {
+            if (string.IsNullOrWhiteSpace(GetTeardownExePath()))
+            {
+                var maybeTeardownExePath = TeardownPathDetectionUtility.MaybeGetTeardownExePath();
+                if (!string.IsNullOrWhiteSpace(maybeTeardownExePath))
+                {
+                    await SetTeardownExePathAsync(maybeTeardownExePath);
+                }
+            }
         }
     }
 }
