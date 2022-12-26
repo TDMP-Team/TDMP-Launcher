@@ -21,7 +21,7 @@ namespace TeardownMultiplayerLauncher.Core
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
-            await InitializeTeardownExePath();
+            await InitializeTeardownExePathAsync();
         }
 
         public async Task LaunchTeardownMultiplayer()
@@ -89,7 +89,7 @@ namespace TeardownMultiplayerLauncher.Core
             );
         }
 
-        private async Task InitializeTeardownExePath()
+        private async Task InitializeTeardownExePathAsync()
         {
             // Only do this check if there isn't an already selected path
             if (string.IsNullOrWhiteSpace(_state.TeardownExePath))
