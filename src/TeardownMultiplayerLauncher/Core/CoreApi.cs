@@ -21,17 +21,7 @@ namespace TeardownMultiplayerLauncher.Core
             _state = await _launcherStateRepository.GetLauncherStateAsync();
             _gameLaunchingService = new GameLaunchingService(_state);
             _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
-
-            // Only do this check if there isn't an already selected path
-            if (_state.TeardownExePath == null || _state.TeardownExePath.Length == 0)
-            {
-                string? teardownPath = await DetectTeardownPathUtility.TryGetTeardownPathAsync("SOFTWARE\\Valve\\Steam");
-                if (teardownPath == null)
-                {
-                    teardownPath = await DetectTeardownPathUtility.TryGetTeardownPathAsync("SOFTWARE\\Wow6432Node\\Valve\\Steam");
-                }
-                await SetTeardownExePathAsync(teardownPath);
-            }
+            await InitializeTeardownExePath();
         }
 
         public async Task LaunchTeardownMultiplayer()
@@ -97,6 +87,20 @@ namespace TeardownMultiplayerLauncher.Core
                     Verb = "open",
                 }
             );
+        }
+
+        private async Task InitializeTeardownExePath()
+        {
+            // Only do this check if there isn't an already selected path
+            if (string.IsNullOrWhiteSpace(_state.TeardownExePath))
+            {
+                var teardownPath = await DetectTeardownPathUtility.TryGetTeardownPathAsync("SOFTWARE\\Valve\\Steam");
+                if (string.IsNullOrWhiteSpace(teardownPath))
+                {
+                    teardownPath = await DetectTeardownPathUtility.TryGetTeardownPathAsync("SOFTWARE\\Wow6432Node\\Valve\\Steam");
+                }
+                await SetTeardownExePathAsync(teardownPath);
+            }
         }
     }
 }
