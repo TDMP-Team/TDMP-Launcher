@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -95,7 +94,8 @@ namespace TeardownMultiplayerLauncher.Core.Services
                 {
                     MessageBox.Show(
                         "Teardown could not shut down and is still running in the backround. Please wait a few minutes for your OS to clear it",
-                        "TDMP Launcher");
+                        "TDMP Launcher"
+                    );
                     return false;
                 }
                 return false;
