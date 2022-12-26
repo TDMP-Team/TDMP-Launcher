@@ -51,6 +51,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Locales\ko.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Locales\en.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -1,0 +1,22 @@
+{
+    "culture_code": "ko",
+    "name": "한글",
+    "strings": {
+        "title": "Teardown 멀티 플레이어",
+        "join_discord": "가입 Discord!",
+        "teardown_path": "TEARDOWN.EXE 통로",
+        "select_teardown": "선택 TEARDOWN.EXE",
+        "teardown_invalid": "TEARDOWN 지원하지않는 (필요 {0})",
+        "teardown_valid": "TEARDOWN 지원하는것",
+        "select_teardown_dialog": "선택 teardown.exe",
+        "injection_delay_title": "기다리는시간",
+        "injection_delay_description": "게임의 최적화를 위해 잠시 기다려주세요",
+        "seconds": "{0} 곧",
+        "play_button": "시작",
+        "updating_tdmp": "업데이트 TDMP",
+        "game_running": "게임 실행",
+        "launch_error": "게임에러가 날 경우 서포트팀에 연락주세요 Discord:\n\n{0}",
+        "launcher_version": "TDMP 론칭 v{0}",
+        "browse": "검색..."
+    }
+}
