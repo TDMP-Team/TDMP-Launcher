@@ -21,9 +21,9 @@ namespace TeardownMultiplayerLauncher.Core.Services
             _state = state;
         }
 
-        public async Task LaunchTeardownMultiplayerAsync()
+        public Task LaunchTeardownMultiplayerAsync()
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
                 LaunchTeardown();
                 WaitForGameAndInject();

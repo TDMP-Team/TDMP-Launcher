@@ -41,10 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="lang\lang-en.json">
+    <None Update="Locales\en.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="lang\lang-ru.json">
+    <None Update="Locales\ru.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\icon.ico">

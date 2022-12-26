@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,8 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using TeardownMultiplayerLauncher.Core;
-using TeardownMultiplayerLauncher.Core.Models.State;
-using TeardownMultiplayerLauncher.Core.Repositories;
+using TeardownMultiplayerLauncher.Core.Models;
 
 namespace TeardownMultiplayerLauncher
 {
@@ -20,27 +16,19 @@ namespace TeardownMultiplayerLauncher
     public partial class MainWindow : Window
     {
         private readonly CoreApi _coreApi = new CoreApi();
-        private LanguageTranslations translations;
-
-        private Dictionary<string, string> languageCodeMap = new Dictionary<string, string>
-            {
-                { "Russian", "ru" },
-                { "English", "en" }
-            };
+        private LocaleData _currentLocaleData;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private async Task LoadLanguage()
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            translations = await LanguageRepository.GetLanguageAsync(_coreApi.GetLanguage());
-        }
-
-        private void InitializeLauncherVersionLabel()
-        {
-            _launcherVersionLabel.Content = string.Format(translations.LauncherVersionText, _coreApi.GetLauncherVersion());
+            await _coreApi.InitializeAsync();
+            await InitializeLocaleComboBoxAsync();
+            await InitializeLocaleDataAsync(_coreApi.GetSelectedCultureCode());
+            UpdateForm();
         }
 
         private void UpdateForm()
@@ -49,9 +37,9 @@ namespace TeardownMultiplayerLauncher
 
             _versionSupportLabel.Content = isGameVersionSupported switch
             {
-                true => translations.TeardownValidText,
-                false => string.Format(translations.TeardownInvalidText, _coreApi.GetSupportedTeardownVersion()),
-                null => translations.SelectTeardownText,
+                true => _currentLocaleData.Strings.TeardownValidText,
+                false => string.Format(_currentLocaleData.Strings.TeardownInvalidText, _coreApi.GetSupportedTeardownVersion()),
+                null => _currentLocaleData.Strings.SelectTeardownText,
             };
             _versionSupportLabel.Background = isGameVersionSupported switch
             {
@@ -60,45 +48,62 @@ namespace TeardownMultiplayerLauncher
                 null => new SolidColorBrush(Color.FromArgb(0xFF, 0xA9, 0xA3, 0x00)),
             };
 
-            _launcherMainWindow.Title = translations.LauncherTitle;
+            _launcherMainWindow.Title = _currentLocaleData.Strings.LauncherTitle;
 
-            _injectionTitleLabel.Content = translations.InjectionTitleText;
-            _injectionDescriptionLabel.Content = translations.InjectionDescriptionText;
+            _joinDiscordLabel.Content = _currentLocaleData.Strings.JoinDiscordText;
 
-            _teardownPathLabel.Content = translations.TeardownPathText;
-
-            _joinDiscordLabel.Content = translations.JoinDiscordText;
-
-            _teardownFolderBrowseButton.Content = translations.BrowseText;
-
+            _teardownPathLabel.Content = _currentLocaleData.Strings.TeardownPathText;
+            _teardownFolderBrowseButton.Content = _currentLocaleData.Strings.BrowseText;
             _teardownFolderTextBox.Content = _coreApi.GetTeardownExePath();
 
-            _playButton.Content = translations.PlayButtonText;
+            _injectionTitleLabel.Content = _currentLocaleData.Strings.InjectionTitleText;
+            _injectionDescriptionLabel.Content = _currentLocaleData.Strings.InjectionDescriptionText;
+            _injectionDelaySlider.Value = _coreApi.GetInjectionDelay().TotalSeconds;
+            _injectionDelayLabel.Content = string.Format(_currentLocaleData.Strings.SecondsText, _coreApi.GetInjectionDelay().TotalSeconds);
+
+            _playButton.Content = _currentLocaleData.Strings.PlayButtonText;
             _playButton.IsEnabled = isGameVersionSupported == true;
 
             _teardownMultiplayerVersionLabel.Content = $"TDMP v{_coreApi.GetInstalledTeardownMultiplayerVersion()}";
+            _launcherVersionLabel.Content = string.Format(_currentLocaleData.Strings.LauncherVersionText, _coreApi.GetLauncherVersion());
+        }
 
-            _injectionDelaySlider.Value = _coreApi.GetInjectionDelay().TotalSeconds;
-            _injectionDelayLabel.Content = string.Format(translations.SecondsText, _coreApi.GetInjectionDelay().TotalSeconds);
+        private void SetBusyStatusText(string text)
+        {
+            _busyStatusLabel.Content = text;
+        }
 
-            switch (_coreApi.GetLanguage())
+        private async Task InitializeLocaleComboBoxAsync()
+        {
+            var index = 0;
+            foreach (var cultureCode in _coreApi.GetSupportedCultureCodes())
             {
-                case ("ru"):
-                    _englishLanguageSelection.IsSelected = false;
-                    _russianlanguageSelection.IsSelected = true;
+                var localeData = await _coreApi.GetLocaleDataAsync(cultureCode);
+                _localeComboBox.Items.Insert(index++, new ComboBoxItem { Name = cultureCode, Content = localeData.Name });
+            }
+        }
+
+        private async Task InitializeLocaleDataAsync(string? cultureCode = null)
+        {
+            cultureCode ??= _coreApi.GetSelectedCultureCode();
+            await _coreApi.SetSelectedCultureCodeAsync(cultureCode);
+            _currentLocaleData = await _coreApi.GetLocaleDataAsync(cultureCode);
+
+            for (var index = 0; index < _localeComboBox.Items.Count; ++index)
+            {
+                var comboBoxItem = (ComboBoxItem)_localeComboBox.Items.GetItemAt(index);
+                if (comboBoxItem.Name == cultureCode)
+                {
+                    _localeComboBox.SelectedIndex = index;
                     break;
-                case ("en"):
-                default:
-                    _englishLanguageSelection.IsSelected = true;
-                    _russianlanguageSelection.IsSelected = false;
-                    break;
+                }
             }
         }
 
         private async void _teardownFolderBrowseButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
-            dialog.Title = translations.SelectDialogText;
+            dialog.Title = _currentLocaleData.Strings.SelectDialogText;
             dialog.Filter = "teardown.exe|";
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -115,43 +120,19 @@ namespace TeardownMultiplayerLauncher
             {
                 if (!Keyboard.IsKeyDown(Key.LeftShift)) // Skip setup if shift is held when clicking Play (primarily for debugging and working around GitHub rate limits).
                 {
-                    SetBusyStatusText(translations.UpdatingTDMPText);
+                    SetBusyStatusText(_currentLocaleData.Strings.UpdatingTDMPText);
                     await _coreApi.SetUpLatestTeardownMultiplayerReleaseAsync();
                     UpdateForm();
                 }
 
-                SetBusyStatusText(translations.GameRunningText);
+                SetBusyStatusText(_currentLocaleData.Strings.GameRunningText);
                 await _coreApi.LaunchTeardownMultiplayer();
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(string.Format(translations.LaunchErrorText, ex), translations.LauncherTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(string.Format(_currentLocaleData.Strings.LaunchErrorText, ex), _currentLocaleData.Strings.LauncherTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             _busyStatusGrid.Visibility = Visibility.Hidden;
-        }
-
-        private void SetBusyStatusText(string text)
-        {
-            _busyStatusLabel.Content = text;
-        }
-
-        private async void LanguageChanged()
-        {
-            if (!languageCodeMap.ContainsValue(_coreApi.GetLanguage()))
-            {
-                _coreApi.SetLanguageAsync("en");
-            }
-            await LoadLanguage();
-            InitializeLauncherVersionLabel();
-            UpdateForm();
-        }
-
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            await _coreApi.InitializeAsync();
-            await LoadLanguage();
-            InitializeLauncherVersionLabel();
-            UpdateForm();
         }
 
         private void _discordGrid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -165,15 +146,12 @@ namespace TeardownMultiplayerLauncher
             UpdateForm();
         }
 
-        private void _languageSelectionBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void _localeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count == 0) return;
-            ComboBoxItem item = (ComboBoxItem)e.AddedItems[0]; // ComboBoxes don't *require* ComboBoxItems as children, but this is a safe cast.
-            if (item == null || item.Content == null || item.Content.ToString() == "") return;
-            if (languageCodeMap[item.Content.ToString()] == _coreApi.GetLanguage()) return;
-            //System.Windows.Controls.ComboBox box = (System.Windows.Controls.ComboBox)sender;
-            _coreApi.SetLanguageAsync(languageCodeMap[item.Content.ToString()]);
-            LanguageChanged();
+            var comboBoxItem = (ComboBoxItem)_localeComboBox.SelectedItem;
+            var cultureCode = comboBoxItem.Name;
+            await InitializeLocaleDataAsync(cultureCode);
+            UpdateForm();
         }
     }
 }
