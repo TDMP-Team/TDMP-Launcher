@@ -93,7 +93,7 @@ namespace TeardownMultiplayerLauncher.Core.Services
                 catch
                 {
                     MessageBox.Show(
-                        "Teardown could not shut down and is still running in the backround. Please wait a few minutes for your OS to clear it",
+                        "Teardown could not shut down and is still running in the background. Please wait a few minutes for your OS to clear it",
                         "TDMP Launcher"
                     );
                     return false;
