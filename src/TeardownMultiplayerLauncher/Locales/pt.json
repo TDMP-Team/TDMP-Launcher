@@ -1,0 +1,22 @@
+{
+    "culture_code": "pt",
+    "name":  "Português",
+    "strings": {
+        "title": "Teardown Multiplayer",
+        "join_discord": "Entre no nosso Discord!",
+        "teardown_path": "CAMINHO TEARDOWN.EXE",
+        "select_teardown": "SELECIONE TEARDOWN.EXE",
+        "teardown_invalid": "VERSÃO DESATUALIZADA DO TEARDOWN (requer {0})",
+        "teardown_valid": "VERSÃO DO TEARDOWN ATUALIZADA",
+        "select_teardown_dialog": "Selecione seu teardown.exe",
+        "injection_delay_title": "ATRASO DE INJEÇÃO",
+        "injection_delay_description": "Aumente isso se o seu jogo demora muito para carregar ou se ele está congelando muito cedo.",
+        "seconds": "{0} Segundos",
+        "play_button": "JOGAR",
+        "updating_tdmp": "ATUALIZANDO TDMP",
+        "game_running": "O JOGO ESTÁ RODANDO",
+        "launch_error": "Houve um problema ao iniciar o jogo, se ele persistir, entre em contato com o nosso suporte do Discord:\n\n{0}",
+        "launcher_version": "TDMP Launcher v{0}",
+        "browse": "Procurar..."
+    }
+}
