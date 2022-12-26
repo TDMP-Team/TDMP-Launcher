@@ -94,10 +94,10 @@ namespace TeardownMultiplayerLauncher.Core
             // Only do this check if there isn't an already selected path
             if (string.IsNullOrWhiteSpace(_state.TeardownExePath))
             {
-                var teardownPath = TeardownPathDetectionUtility.TryGetTeardownPath("SOFTWARE\\Valve\\Steam");
+                var teardownPath = TeardownPathDetectionUtility.MaybeGetTeardownExePath("SOFTWARE\\Valve\\Steam");
                 if (string.IsNullOrWhiteSpace(teardownPath))
                 {
-                    teardownPath = TeardownPathDetectionUtility.TryGetTeardownPath("SOFTWARE\\Wow6432Node\\Valve\\Steam");
+                    teardownPath = TeardownPathDetectionUtility.MaybeGetTeardownExePath("SOFTWARE\\Wow6432Node\\Valve\\Steam");
                 }
                 await SetTeardownExePathAsync(teardownPath);
             }

@@ -9,7 +9,12 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
 {
     public class TeardownPathDetectionUtility
     {
-        public static string? TryGetTeardownPath(string regKey)
+        /// <summary>
+        /// Attempts to detect the installed Teardown Steam directory.
+        /// </summary>
+        /// <param name="regKey"></param>
+        /// <returns>Returns file path to teardown.exe or null if not found.</returns>
+        public static string? MaybeGetTeardownExePath(string regKey)
         {
             RegistryKey? key = Registry.LocalMachine.OpenSubKey(regKey);
             if (key != null)
