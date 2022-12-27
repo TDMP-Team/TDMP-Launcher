@@ -8,7 +8,7 @@ namespace TeardownMultiplayerLauncher
     /// </summary>
     public partial class App : Application
     {
-        private static Mutex? _mutex;
+        private static Mutex? Mutex;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -18,7 +18,7 @@ namespace TeardownMultiplayerLauncher
 
         private void EnsureOnlySingleInstanceRunning()
         {
-            _mutex = new Mutex(true, "TDMPLauncher", out var isNewMutex);
+            Mutex = new Mutex(true, "TDMPLauncher", out var isNewMutex);
             if (!isNewMutex)
             {
                 MessageBox.Show("Launcher is already running.", "Teardown Multiplayer", MessageBoxButton.OK, MessageBoxImage.Exclamation);
