@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Windows;
+using TeardownMultiplayerLauncher.Core;
 
 namespace TeardownMultiplayerLauncher
 {
@@ -8,12 +10,20 @@ namespace TeardownMultiplayerLauncher
     /// </summary>
     public partial class App : Application
     {
+#pragma warning disable IDE0052 // Remove unread private members
         private static Mutex? Mutex;
+#pragma warning restore IDE0052 // Remove unread private members
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             EnsureOnlySingleInstanceRunning();
+            var coreApi = await CoreApi.CreateCoreApiAsync();
+            if (e.Args.Any())
+            {
+                await new CoreApiCommandLineExecutor(coreApi).ExecuteAsync(e.Args);
+            }
+            new MainWindow(coreApi).Show();
         }
 
         private void EnsureOnlySingleInstanceRunning()

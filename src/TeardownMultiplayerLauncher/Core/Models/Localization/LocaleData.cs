@@ -3,7 +3,7 @@ using TeardownMultiplayerLauncher.Core.Models.Localization;
 
 namespace TeardownMultiplayerLauncher.Core.Models
 {
-    internal class LocaleData
+    public class LocaleData
     {
         // New locale-specific data such as images/icons, etc can be added here.
 

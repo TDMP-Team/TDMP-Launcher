@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TeardownMultiplayerLauncher": {
+      "commandName": "Project",
+      "commandLineArgs": "--play"
+    }
+  }
+}
