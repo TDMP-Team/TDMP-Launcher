@@ -49,6 +49,9 @@ namespace TeardownMultiplayerLauncher.Core.Models.Localization
         [JsonProperty("launcher_version")]
         public string LauncherVersionText { get; set; } = string.Empty;
 
+        [JsonProperty("view_release_notes")]
+        public string ViewReleaseNotesText { get; set; } = string.Empty;
+
         [JsonProperty("browse")]
         public string BrowseText { get; set; } = string.Empty;
     }

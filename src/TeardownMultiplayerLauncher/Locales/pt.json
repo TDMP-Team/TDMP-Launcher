@@ -17,6 +17,7 @@
         "game_running": "O JOGO ESTÁ RODANDO",
         "launch_error": "Houve um problema ao iniciar o jogo, se ele persistir, entre em contato com o nosso suporte do Discord:\n\n{0}",
         "launcher_version": "TDMP Launcher v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Procurar..."
     }
 }

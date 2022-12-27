@@ -17,6 +17,7 @@
         "game_running": "SPIEL LÄUFT!",
         "launch_error": "Beim Starten des Spiels ist ein Fehler aufgetreten. Wenn das Problem weiterhin besteht, wende dich bitte an den Support im Discord:\n\n{0}",
         "launcher_version": "TDMP Launcher v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Durchsuchen..."
     }
 }

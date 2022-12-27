@@ -17,6 +17,7 @@
         "game_running": "OYUN ÇALIŞIYOR",
         "launch_error": "Oyun başlatılırken bir hata oluştu. Sorun devam ederse, Discord'daki destekle iletişime geçin:\n\n{0}",
         "launcher_version": "TDMP Launcher v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Gözat..."
     }
 }

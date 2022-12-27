@@ -17,6 +17,7 @@
         "game_running": "游戏运行中",
         "launch_error": "在启动游戏时出现了一个错误，如果该错误持续发生，请在Discord里联系支持人员：\n\n{0}",
         "launcher_version": "TDMP启动器v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "浏览..."
     }
 }

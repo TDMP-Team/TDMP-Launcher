@@ -17,6 +17,7 @@
         "game_running": "JEU LANCÉ",
         "launch_error": "Une erreur a eu lieu lors du lancement du jeu. Si le problème persiste, merci de contacter le support sur Discord:\n\n{0}",
         "launcher_version": "TDMP Lanceur v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Parcourir..."
     }
 }

@@ -17,6 +17,7 @@
         "game_running": "GAME RUNNING",
         "launch_error": "An error occurred while launching the game. If the issue persists, please contact support in Discord:\n\n{0}",
         "launcher_version": "TDMP Launcher v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Browse..."
     }
 }

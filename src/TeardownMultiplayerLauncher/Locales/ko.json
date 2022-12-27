@@ -2,7 +2,7 @@
     "culture_code": "ko",
     "name": "한글",
     "strings": {
-        "title": "Teardown 멀티 플레이어",
+        "title": "Teardown Multiplayer",
         "join_discord": "가입 Discord!",
         "teardown_path": "TEARDOWN.EXE 통로",
         "select_teardown": "선택 TEARDOWN.EXE",
@@ -17,6 +17,7 @@
         "game_running": "게임 실행",
         "launch_error": "게임에러가 날 경우 서포트팀에 연락주세요 Discord:\n\n{0}",
         "launcher_version": "TDMP 론칭 v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "검색..."
     }
 }

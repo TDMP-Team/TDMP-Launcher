@@ -17,6 +17,7 @@
         "game_running": "URUCHOMIONO GRĘ",
         "launch_error": "Wystąpił błąd podczas uruchamiania gry. Jeżeli błąd sie powtarza, skontaktuj się z pomocą techniczną na Discordzie:\n\n{0}",
         "launcher_version": "Program uruchamiający TDMP v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "WYBIERZ..."
     }
 }

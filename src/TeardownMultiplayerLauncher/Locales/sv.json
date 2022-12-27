@@ -17,6 +17,7 @@
         "game_running": "SPELET KÖRS",
         "launch_error": "Ett fel uppstod när spelet startade. Om problemet kvarstår, kontakta hjälp i Discord:\n\n{0}",
         "launcher_version": "TDMP Launcher v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Bläddra..."
     }
 }

@@ -17,6 +17,7 @@
         "game_running": "ИГРА ЗАПУЩЕНА",
         "launch_error": "Возникла ошибка при запуске игры. Если проблема остается, пожалуйста свяжитесь с поддержкой в нашем Discord:\n\n{0}",
         "launcher_version": "TDMP Лаунчер v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Обзор..."
     }
 }

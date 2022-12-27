@@ -17,6 +17,7 @@
         "game_running": "IGRA POKRENUTA",
         "launch_error": "Došlo je do pogreške prilikom pokretanja igre. Ako se problem nastavi, obratite se podršci u Discordu:\n\n{0}",
         "launcher_version": "TDMP Launcher v{0}",
+        "view_release_notes": "View Release Notes",
         "browse": "Pretraži..."
     }
 }

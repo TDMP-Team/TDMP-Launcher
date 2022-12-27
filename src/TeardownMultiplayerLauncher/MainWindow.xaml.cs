@@ -67,6 +67,7 @@ namespace TeardownMultiplayerLauncher
 
             _teardownMultiplayerVersionLabel.Content = $"TDMP v{_coreApi.GetInstalledTeardownMultiplayerVersion()}";
             _launcherVersionLabel.Content = string.Format(_currentLocaleData.Strings.LauncherVersionText, _coreApi.GetLauncherVersion());
+            _launcherVersionLabel.ToolTip = _currentLocaleData.Strings.ViewReleaseNotesText;
         }
 
         private void SetBusyStatusText(string text)
