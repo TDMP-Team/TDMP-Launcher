@@ -13,13 +13,12 @@ namespace LauncherUpdater.Core
         private LauncherUpdateService? _launcherUpdateService;
         private LauncherUpdaterState? _state;
 
-        public async Task<Task> InitializeAsync()
+        public async Task InitializeAsync()
         {
             _launcherStateRepository = new UpdaterStateRepository();
             _state = await _launcherStateRepository.GetUpdaterStateAsync();
             _launcherLaunchingService = new LauncherLaunchingService(_state);
             _launcherUpdateService = new LauncherUpdateService(_state);
-            return SetUpAndLaunchLauncherAsync();
         }
 
         public string GetLauncherVersion()
@@ -37,7 +36,7 @@ namespace LauncherUpdater.Core
             return _state.CurrentTask;
         }
 
-        private async Task SetUpAndLaunchLauncherAsync()
+        public async Task SetUpAndLaunchLauncherAsync()
         {
             await SetUpLatestLauncherReleaseAsync();
             await _launcherLaunchingService.LaunchLauncherAsync();

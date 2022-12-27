@@ -50,6 +50,7 @@ namespace LauncherUpdater
         {
             await _coreApi.InitializeAsync();
             UpdateForm();
+
             Timer t = new();
             t.Interval = 100; // In milliseconds
             t.AutoReset = true; // Stops it from repeating
@@ -59,12 +60,13 @@ namespace LauncherUpdater
                 StatusText = _coreApi.GetCurrentTask();
             });
             t.Start();
+
+            await _coreApi.SetUpAndLaunchLauncherAsync();
         }
 
         private void UpdateForm()
         {
-            _updaterMainWindow.Title = "TDMP Launcher Updater";
-            _updaterVersionLabel.Content = $"TDMP Updater v{_coreApi.GetLauncherVersion()}";
+            _updaterVersionLabel.Content = $"TDMP Launcher Updater v{_coreApi.GetLauncherVersion()}";
         }
     }
 }

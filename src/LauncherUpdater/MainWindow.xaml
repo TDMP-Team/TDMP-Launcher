@@ -15,7 +15,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         x:Name="_updaterMainWindow"
-        Title="Teardown Multiplayer" Width="640" SizeToContent="Height" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico" Loaded="Window_Loaded" WindowStyle="None">
+        Title="Teardown Multiplayer" Width="640" Height="120" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="Resources/icon.ico" Loaded="Window_Loaded" WindowStyle="None">
     <Grid>
         <Grid x:Name="_launcherMainGrid" Margin="0,0,0,0">
             <materialDesign:Card Margin="20,20,20,20" Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
@@ -36,12 +36,7 @@
                 </Grid>
             </materialDesign:Card>
             <Grid Margin="20,0,20,0" Height="20" VerticalAlignment="Bottom">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300*"/>
-                    <ColumnDefinition Width="41*"/>
-                    <ColumnDefinition Width="259*"/>
-                </Grid.ColumnDefinitions>
-                <Label x:Name="_updaterVersionLabel" Content="TDMP Updater vx.x.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <Label x:Name="_updaterVersionLabel" Content="TDMP Launcher Updater vx.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"/>
             </Grid>
         </Grid>
     </Grid>
