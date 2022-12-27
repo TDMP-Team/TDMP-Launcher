@@ -11,13 +11,13 @@
     <FileVersion></FileVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AssemblyVersion>0.1.0</AssemblyVersion>
-    <Title>Teardown Multiplayer Launcher</Title>
+    <Title>Teardown Multiplayer Launcher Updater</Title>
     <Company>TDMP Team</Company>
-    <Product>Teardown Multiplayer Launcher</Product>
+    <Product>Teardown Multiplayer Launcher Updater</Product>
     <Description>The official launcher for the Teardown Multiplayer mod.</Description>
     <PackageIcon>icon.ico</PackageIcon>
     <PackageProjectUrl>https://github.com/TDMP-Team/TDMP-Public</PackageProjectUrl>
-    <PackageTags>teardown;teardown multiplayer;tdmp;multiplayer;</PackageTags>
+    <PackageTags>teardown;teardown multiplayer;tdmp;multiplayer;updater;</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -38,13 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Gameloop.Vdf" Version="0.6.2" />
-    <PackageReference Include="Gameloop.Vdf.JsonConverter" Version="0.2.1" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.9" />
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Onova" Version="2.6.3" />
-    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
