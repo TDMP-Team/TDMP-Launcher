@@ -25,7 +25,7 @@
                         <DropShadowEffect Direction="270" RenderingBias="Quality" ShadowDepth="2" BlurRadius="5" Opacity="1"/>
                     </Label.Effect>
                 </Label>
-                <Grid x:Name="_discordGrid" Margin="10,10,0,0" Background="#3F000000" Cursor="Hand" MouseDown="_discordGrid_MouseDown" HorizontalAlignment="Left" MinWidth="134" Height="27" VerticalAlignment="Top">
+                <Grid x:Name="_discordGrid" Margin="10,10,0,0" Background="#3F000000" Cursor="Hand" MouseUp="_discordGrid_MouseUp" HorizontalAlignment="Left" MinWidth="134" Height="27" VerticalAlignment="Top">
                     <Image Source="/Resources/discord.png" Stretch="Fill" Margin="6,6,0,6" HorizontalAlignment="Left" Width="21"/>
                     <Label x:Name="_joinDiscordLabel" Content="Join the Discord!" Margin="32,0,0,0" FontSize="12" VerticalContentAlignment="Center"/>
                 </Grid>
@@ -59,7 +59,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="_teardownMultiplayerVersionLabel" Content="TDMP vx.x.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.ColumnSpan="1"/>
-                <Label x:Name="_launcherVersionLabel" Content="TDMP Launcher vx.x.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1"/>
+                <Label x:Name="_launcherVersionLabel" Content="TDMP Launcher vx.x.x.x" Foreground="{DynamicResource MaterialDesignToolForeground}" FontSize="10" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Height="20" VerticalAlignment="Center" Grid.Column="1" MouseUp="_launcherVersionLabel_MouseUp" Cursor="Hand"/>
             </Grid>
         </Grid>
 

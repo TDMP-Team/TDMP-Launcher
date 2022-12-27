@@ -114,6 +114,17 @@ namespace TeardownMultiplayerLauncher.Core
             );
         }
 
+        public void OpenLauncherReleasePage()
+        {
+            Process.Start(
+                new ProcessStartInfo($"https://github.com/TDMP-Team/TDMP-Launcher-Public/releases/tag/{GetLauncherVersion()}")
+                {
+                    UseShellExecute = true,
+                    Verb = "open",
+                }
+            );
+        }
+
         private async Task DetectAndSetTeardownExePathAsync()
         {
             if (string.IsNullOrWhiteSpace(GetTeardownExePath()))

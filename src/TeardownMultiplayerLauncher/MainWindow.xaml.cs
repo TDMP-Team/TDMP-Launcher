@@ -142,7 +142,7 @@ namespace TeardownMultiplayerLauncher
             _busyStatusGrid.Visibility = Visibility.Hidden;
         }
 
-        private void _discordGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        private void _discordGrid_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _coreApi.OpenDiscordServer();
         }
@@ -159,6 +159,11 @@ namespace TeardownMultiplayerLauncher
             var cultureCode = comboBoxItem.Name;
             await InitializeLocaleDataAsync(cultureCode);
             UpdateForm();
+        }
+
+        private void _launcherVersionLabel_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _coreApi.OpenLauncherReleasePage();
         }
     }
 }
