@@ -3,7 +3,7 @@
     "name": "Italiano",
     "strings": {
         "title": "Teardown Multiplayer",
-        "join_discord": "Unisciti al Discord!",
+        "join_discord": "Unisciti al server Discord!",
         "teardown_path": "PERCORSO TEARDOWN.EXE",
         "select_teardown": "SELEZIONA IL TUO TEARDOWN.EXE!",
         "teardown_invalid": "VERSIONE DI TEARDOWN NON SUPPORTATA (requires {0})",
@@ -11,7 +11,7 @@
         "select_teardown_dialog": "Si prega di selezionare teardown.exe",
         "injection_delay_title": "RITARDO INIEZIONE",
         "injection_delay_description": "Aumenta questo se il tuo gioco ci mette tanto a caricare o si chiude mentre si inietta troppo velocemente.",
-        "seconds": "{0} Secondo(i)",
+        "seconds": "{0} Secondi(o)",
         "play_button": "GIOCA",
         "updating_tdmp": "AGGIORNANDO TDMP",
         "game_running": "GIOCO IN ESECUZIONE",

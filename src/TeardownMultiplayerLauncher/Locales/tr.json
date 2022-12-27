@@ -1,0 +1,22 @@
+{
+    "culture_code": "tr",
+    "name": "Türkçe",
+    "strings": {
+        "title": "Teardown Multiplayer",
+        "join_discord": "Discord'a Katılın!",
+        "teardown_path": "TEARDOWN.EXE KONUMU",
+        "select_teardown": "TEARDOWN.EXE DOSYASINI SEÇİN",
+        "teardown_invalid": "TEARDOWN SÜRÜMÜ DESTEKLENMİYOR (gerekli sürüm {0})",
+        "teardown_valid": "TEARDOWN SÜRÜMÜ DESTEKLENİYOR",
+        "select_teardown_dialog": "Lütfen teardown.exe dosyanızı seçin",
+        "injection_delay_title": "ENJEKSİYON GECİKMESİ",
+        "injection_delay_description": "Oyununuz açılması çok uzun sürüyorsa ve mod enjekte edilirken oyunda çökme yaşıyorsanız, bu gecikme değerini arttırın.",
+        "seconds": "{0} Saniye",
+        "play_button": "OYNA",
+        "updating_tdmp": "TDMP GÜNCELLENİYOR",
+        "game_running": "OYUN ÇALIŞIYOR",
+        "launch_error": "Oyun başlatılırken bir hata oluştu. Sorun devam ederse, Discord'daki destekle iletişime geçin:\n\n{0}",
+        "launcher_version": "TDMP Launcher v{0}",
+        "browse": "Gözat..."
+    }
+}
