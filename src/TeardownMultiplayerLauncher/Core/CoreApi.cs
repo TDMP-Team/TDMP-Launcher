@@ -10,7 +10,7 @@ using TeardownMultiplayerLauncher.Core.Utilities;
 
 namespace TeardownMultiplayerLauncher.Core
 {
-    internal class CoreApi
+    public class CoreApi
     {
         private LauncherStateRepository? _launcherStateRepository;
         private GameLaunchingService? _gameLaunchingService;
@@ -18,17 +18,21 @@ namespace TeardownMultiplayerLauncher.Core
         private LocalizationService? _localizationService;
         private LauncherState? _state;
 
-        public async Task InitializeAsync()
+        private CoreApi() { }
+
+        public static async Task<CoreApi> CreateCoreApiAsync()
         {
-            _launcherStateRepository = new LauncherStateRepository();
-            _state = await _launcherStateRepository.GetLauncherStateAsync();
-            _gameLaunchingService = new GameLaunchingService(_state);
-            _teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(_state);
-            _localizationService = new LocalizationService(_state);
-            await DetectAndSetTeardownExePathAsync();
+            var coreApi = new CoreApi();
+            coreApi._launcherStateRepository = new LauncherStateRepository();
+            coreApi._state = await coreApi._launcherStateRepository.GetLauncherStateAsync();
+            coreApi._gameLaunchingService = new GameLaunchingService(coreApi._state);
+            coreApi._teardownMultiplayerUpdateService = new TeardownMultiplayerUpdateService(coreApi._state);
+            coreApi._localizationService = new LocalizationService(coreApi._state);
+            await coreApi.DetectAndSetTeardownExePathAsync();
+            return coreApi;
         }
 
-        public Task LaunchTeardownMultiplayer()
+        public Task LaunchTeardownMultiplayerAsync()
         {
             return _gameLaunchingService.LaunchTeardownMultiplayerAsync();
         }

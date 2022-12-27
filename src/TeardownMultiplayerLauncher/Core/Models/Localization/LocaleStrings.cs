@@ -2,7 +2,7 @@
 
 namespace TeardownMultiplayerLauncher.Core.Models.Localization
 {
-    internal class LocaleStrings
+    public class LocaleStrings
     {
         [JsonProperty("title")]
         public string LauncherTitle { get; set; } = string.Empty;

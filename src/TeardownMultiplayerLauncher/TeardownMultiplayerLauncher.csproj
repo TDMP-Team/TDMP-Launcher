@@ -10,7 +10,7 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <FileVersion></FileVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <AssemblyVersion>0.3.2</AssemblyVersion>
+    <AssemblyVersion>0.4.0</AssemblyVersion>
     <Title>Teardown Multiplayer Launcher</Title>
     <Company>TDMP Team</Company>
     <Product>Teardown Multiplayer Launcher</Product>
@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Gameloop.Vdf" Version="0.6.2" />
     <PackageReference Include="Gameloop.Vdf.JsonConverter" Version="0.2.1" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.9" />

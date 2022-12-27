@@ -16,17 +16,17 @@ namespace TeardownMultiplayerLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly CoreApi _coreApi = new CoreApi();
+        private readonly CoreApi _coreApi;
         private LocaleData _currentLocaleData;
 
-        public MainWindow()
+        public MainWindow(CoreApi coreApi)
         {
+            _coreApi = coreApi;
             InitializeComponent();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await _coreApi.InitializeAsync();
             await InitializeLocaleComboBoxAsync();
             await InitializeLocaleDataAsync(_coreApi.GetSelectedCultureCode());
             UpdateForm();
@@ -133,7 +133,7 @@ namespace TeardownMultiplayerLauncher
                 }
 
                 SetBusyStatusText(_currentLocaleData.Strings.GameRunningText);
-                await _coreApi.LaunchTeardownMultiplayer();
+                await _coreApi.LaunchTeardownMultiplayerAsync();
             }
             catch (Exception ex)
             {
