@@ -5,29 +5,29 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using LauncherUpdater.Core.Models.State;
-using System.Threading;
-using System.Diagnostics;
+using LauncherUpdater.Core.Utilities;
 
 namespace LauncherUpdater.Core.Services
 {
     internal class LauncherUpdateService
     {
-        private readonly UpdaterState _state;
-        private readonly IPackageResolver _packageResolver;
         private event Action<double> DownloadProgress;
 
-        public LauncherUpdateService(UpdaterState state)
+        private readonly LauncherUpdaterState _state;
+        private readonly IPackageResolver _packageResolver;
+
+        public LauncherUpdateService(LauncherUpdaterState state)
         {
             _state = state;
             _packageResolver = new GithubPackageResolver(
-                state.LauncherUpdateState.GitHubRepositoryOwner,
-                state.LauncherUpdateState.GitHubRepositoryName,
-                state.LauncherUpdateState.GitHubAssetFileNamePattern
+                state.GitHubRepositoryOwner,
+                state.GitHubRepositoryName,
+                state.GitHubAssetFileNamePattern
             );
             DownloadProgress += DownloadProgressChanged;
         }
 
-        public async Task SetUpLatestReleaseAsync(string launcherDirectory)
+        public async Task SetUpLatestReleaseAsync()
         {
             if (IsOnCooldown())
             {
@@ -36,21 +36,20 @@ namespace LauncherUpdater.Core.Services
 
             var availablePackageVersions = await _packageResolver.GetPackageVersionsAsync();
             var latestReleaseVersion = availablePackageVersions.First(); // Assume first package version is latest.
-            _state.LauncherUpdateState.LastCheckDateTimeUtc = DateTime.UtcNow;
+            _state.LastCheckDateTimeUtc = DateTime.UtcNow;
 
             if (IsLatestReleaseNewerThanInstalledVersion(latestReleaseVersion))
             {
                 var zipFilePath = await DownloadReleaseZipAsync(latestReleaseVersion);
-                await UninstallCurrentReleaseAsync(launcherDirectory);
-                await InstallLatestReleaseFromZipAsync(zipFilePath, launcherDirectory);
-                _state.LauncherUpdateState.InstalledVersion = latestReleaseVersion.ToString();
-
+                UninstallCurrentRelease();
+                await InstallLatestReleaseFromZipAsync(zipFilePath);
+                _state.InstalledVersion = latestReleaseVersion.ToString();
             }
         }
 
         private void DownloadProgressChanged(double newValue)
         {
-            _state.PercentageDone = (float)(newValue*100);
+            _state.Progress = (float)(newValue * 100.0f);
             _state.CurrentTask = "Updating...";
         }
 
@@ -59,12 +58,12 @@ namespace LauncherUpdater.Core.Services
         /// </summary>
         private bool IsOnCooldown()
         {
-            return _state.LauncherUpdateState.LastCheckDateTimeUtc.HasValue && (DateTime.UtcNow - _state.LauncherUpdateState.LastCheckDateTimeUtc) < _state.LauncherUpdateState.CheckCooldownDuration;
+            return _state.LastCheckDateTimeUtc.HasValue && (DateTime.UtcNow - _state.LastCheckDateTimeUtc) < _state.CheckCooldownDuration;
         }
 
         private bool IsLatestReleaseNewerThanInstalledVersion(Version latestReleaseVersion)
         {
-            return !string.Equals(latestReleaseVersion.ToString(), _state.LauncherUpdateState.InstalledVersion, StringComparison.Ordinal);
+            return !string.Equals(latestReleaseVersion.ToString(), _state.InstalledVersion, StringComparison.Ordinal);
         }
 
         private async Task<string> DownloadReleaseZipAsync(Version releaseVersion)
@@ -75,68 +74,22 @@ namespace LauncherUpdater.Core.Services
             return zipFilePath;
         }
 
-        private void CopyDirectoryContents(string sourcePath, string destinationPath, bool overwriteFiles = true)
+        private void UninstallCurrentRelease()
         {
-            var allDirectories = Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories);
-
-            foreach (string dir in allDirectories)
+            if (Directory.Exists(PathUtility.TeardownLauncherDirectory))
             {
-                string dirToCreate = dir.Replace(sourcePath, destinationPath);
-                Directory.CreateDirectory(dirToCreate);
-            }
-            var allFiles = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories);
-
-            foreach (string newPath in allFiles)
-            {
-                File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), overwriteFiles);
-                File.Delete(newPath);
+                Directory.Delete(PathUtility.TeardownLauncherDirectory, true);
             }
         }
 
-        private Task UninstallCurrentReleaseAsync(string launcherDirectory)
+        private Task InstallLatestReleaseFromZipAsync(string zipFilePath)
         {
             return Task.Run(() =>
             {
-                // Remove TDMP folders. This is required in case if files was removed or something unexpected happened.
-                if (Directory.Exists(launcherDirectory))
-                {
-                    Directory.Delete(launcherDirectory, true);
-                }
-
-                foreach (var filePath in _state.LauncherUpdateState.InstalledFilePaths)
-                {
-                    if (File.Exists(filePath) && filePath.StartsWith(launcherDirectory))
-                    {
-                        File.Delete(filePath);
-                    }
-                }
-                _state.LauncherUpdateState.InstalledFilePaths.Clear();
-            }).ContinueWith(task =>
-            {
-                if (task.IsFaulted)
-                {
-                    throw task.Exception;
-                }
-            });
-        }
-
-        private Task InstallLatestReleaseFromZipAsync(string zipFilePath, string launcherDirectoryPath)
-        {
-            return Task.Run(() =>
-            {
-                using ZipArchive zipArchive = ZipFile.OpenRead(zipFilePath);
-                foreach (var zipEntry in zipArchive.Entries)
-                {
-                    var isFile = !string.IsNullOrWhiteSpace(zipEntry.Name); // Folders don't have "Name" populated, only files do.
-                    if (isFile)
-                    {
-                        _state.LauncherUpdateState.InstalledFilePaths.Add(Path.Combine(launcherDirectoryPath, zipEntry.FullName));
-                    }
-                }
-                ZipFile.ExtractToDirectory(zipFilePath, launcherDirectoryPath, true);
-                string unZipDir = Directory.EnumerateDirectories(launcherDirectoryPath).First();
-                CopyDirectoryContents(unZipDir, launcherDirectoryPath);
-                Directory.Delete(unZipDir, true);
+                using var zipArchive = ZipFile.OpenRead(zipFilePath);
+                ZipFile.ExtractToDirectory(zipFilePath, PathUtility.TeardownLauncherDirectory, true);
+                var extractedDirectory = Directory.EnumerateDirectories(PathUtility.TeardownLauncherDirectory).First(); // Gets the TDMP-Launcher-x.x.x directory that was extracted from the zip.
+                FileUtility.MoveDirectoryContents(extractedDirectory, PathUtility.TeardownLauncherDirectory);
             }).ContinueWith(task =>
             {
                 if (task.IsFaulted)

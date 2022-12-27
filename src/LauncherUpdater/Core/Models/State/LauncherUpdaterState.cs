@@ -1,11 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace LauncherUpdater.Core.Models.State
 {
-    internal class LauncherUpdateState
+    internal class LauncherUpdaterState
     {
+        public static readonly int CurrentUpdaterStateVersion = 1; // Bump this whenever a contract-breaking change is made to the state model. This will ensure incompatible states are reset.
+
+        [JsonProperty("updater_state_version")]
+        public int UpdaterStateVersion { get; set; }
+
         [JsonProperty("github_repository_owner")]
         public string GitHubRepositoryOwner { get; set; } = "TDMP-Team";
 
@@ -24,7 +28,10 @@ namespace LauncherUpdater.Core.Models.State
         [JsonProperty("installed_version")]
         public string? InstalledVersion { get; set; }
 
-        [JsonProperty("installed_file_paths")]
-        public List<string> InstalledFilePaths { get; set; } = new List<string>();
+        [JsonIgnore]
+        public float Progress { get; set; } = 0;
+
+        [JsonIgnore]
+        public string CurrentTask { get; set; } = "Checking For Updates...";
     }
 }

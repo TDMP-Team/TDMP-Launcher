@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using LauncherUpdater.Core.Models.State;
 using LauncherUpdater.Core.Utilities;
 
@@ -14,9 +13,10 @@ namespace LauncherUpdater.Core.Services
         private static readonly int MaxProcessSearchAttempts = 30;
         private static readonly TimeSpan ProcessSearchInterval = TimeSpan.FromSeconds(1);
         private static readonly string LauncherProcessName = "TeardownMultiplayerLauncher";
-        private readonly UpdaterState _state;
 
-        public LauncherLaunchingService(UpdaterState state)
+        private readonly LauncherUpdaterState _state;
+
+        public LauncherLaunchingService(LauncherUpdaterState state)
         {
             _state = state;
         }
@@ -26,7 +26,7 @@ namespace LauncherUpdater.Core.Services
             _state.CurrentTask = "Launching...";
             return Task.Run(() =>
             {
-                LaunchTeardown();
+                LaunchLauncher();
                 WaitForLauncherAndClose();
             }).ContinueWith(task =>
             {
@@ -37,14 +37,14 @@ namespace LauncherUpdater.Core.Services
             });
         }
 
-        private void LaunchTeardown()
+        private void LaunchLauncher()
         {
             Process.Start(
-                new ProcessStartInfo(_state.LauncherExePath)
+                new ProcessStartInfo(PathUtility.TeardownLauncherExePath)
                 {
                     UseShellExecute = true,
                     Verb = "open",
-                    WorkingDirectory = PathUtility.GetLauncherDirectory(_state.LauncherExePath)
+                    WorkingDirectory = PathUtility.TeardownLauncherDirectory
                 }
             );
         }
@@ -68,7 +68,7 @@ namespace LauncherUpdater.Core.Services
                 launcherProcess = Process.GetProcessesByName(LauncherProcessName).FirstOrDefault(); // Search for teardown process again after injection because the old Process object gets corrupted.
                 if (launcherProcess != null)
                 {
-                    Process.GetCurrentProcess().Kill();
+                    Environment.Exit(0);
                 }
                 return;
             }

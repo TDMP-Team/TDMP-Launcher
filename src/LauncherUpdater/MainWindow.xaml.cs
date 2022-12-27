@@ -12,12 +12,9 @@ namespace LauncherUpdater
     {
         private readonly CoreApi _coreApi = new CoreApi();
 
-        private float _percentage_changed;
-
-        private string _status_text;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private float _percentage_changed;
         public float PercentageChanged
         {
             get { return _percentage_changed; }
@@ -28,6 +25,7 @@ namespace LauncherUpdater
             }
         }
 
+        private string _status_text;
         public string StatusText
         {
             get { return _status_text; }
@@ -52,24 +50,21 @@ namespace LauncherUpdater
         {
             await _coreApi.InitializeAsync();
             UpdateForm();
-            System.Timers.Timer t = new();
+            Timer t = new();
             t.Interval = 100; // In milliseconds
             t.AutoReset = true; // Stops it from repeating
-            t.Elapsed += new ElapsedEventHandler(TimerElapsed);
+            t.Elapsed += new ElapsedEventHandler((sender, e) =>
+            {
+                PercentageChanged = _coreApi.GetPercentageDone();
+                StatusText = _coreApi.GetCurrentTask();
+            });
             t.Start();
-        }
-
-        void TimerElapsed(object? sender, ElapsedEventArgs e)
-        {
-            PercentageChanged = _coreApi.GetPercentageDone();
-            StatusText = _coreApi.GetCurrentTask();
         }
 
         private void UpdateForm()
         {
-            _updaterMainWindow.Title = "TDMP Launcher Update";
-
-            _updaterVersionLabel.Content = $"Updater v{_coreApi.GetLauncherVersion()}";
+            _updaterMainWindow.Title = "TDMP Launcher Updater";
+            _updaterVersionLabel.Content = $"TDMP Updater v{_coreApi.GetLauncherVersion()}";
         }
     }
 }
