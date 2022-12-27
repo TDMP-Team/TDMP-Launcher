@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using TeardownMultiplayerLauncher.Core;
@@ -22,8 +23,12 @@ namespace TeardownMultiplayerLauncher
             if (e.Args.Any())
             {
                 await new CoreApiCommandLineExecutor(coreApi).ExecuteAsync(e.Args);
+                Shutdown();
             }
-            new MainWindow(coreApi).Show();
+            else
+            {
+                new MainWindow(coreApi).Show();
+            }
         }
 
         private void EnsureOnlySingleInstanceRunning()
