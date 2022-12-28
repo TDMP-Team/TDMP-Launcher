@@ -1,0 +1,22 @@
+{
+    "culture_code": "nl",
+    "name":  "Nederlands",
+    "strings": {
+        "title": "Teardown Multiplayer",
+        "join_discord": "Neem deel aan de Discord server!",
+        "teardown_path": "TEARDOWN.EXE PAD",
+        "select_teardown": "SELECTEER UW TEARDOWN.EXE",
+        "teardown_invalid": "TEARDOWN VERSIE NIET ONDERSTEUND ({0} vereist)",
+        "teardown_valid": "TEARDOWN VERSIE ONDERSTEUND",
+        "select_teardown_dialog": "Selecteer alstublieft uw teardown.exe",
+        "injection_delay_title": "INJECTIE VERTRAGING",
+        "injection_delay_description": "Verhoog dit als uw game heel lang nodig heeft om te laden en als uw game crasht wanneer uw te vroeg injecteert.",
+        "seconds": "{0} seconde(n)",
+        "play_button": "SPELEN",
+        "updating_tdmp": "TDMP IS AAN HET UPDATEN",
+        "game_running": "GAME ACTIEF",
+        "launch_error": "Er is een fout opgetreden bij het openen van de game. Als deze fout blijft voorkomen, neem dan alstublieft contact op in de Discord:\n\n{0}",
+        "launcher_version": "TDMP Launcher v{0}",
+        "browse": "Blader..."
+    }
+}
