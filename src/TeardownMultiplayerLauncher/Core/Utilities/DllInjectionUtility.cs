@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
 
 namespace TeardownMultiplayerLauncher.Core.Utilities
 {
@@ -42,9 +44,25 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
                 All = 0x0000001F,
                 NoHeaps = 0x40000000
             }
+            public struct PROCESS_INFORMATION
+            {
+                public IntPtr hProcess;
+                public IntPtr hThread;
+                public uint dwProcessId;
+                public uint dwThreadId;
+            }
 
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern IntPtr OpenProcess(ProcessAccessFlags processAccess, bool bInheritHandle, int processId);
+
+            [DllImport("kernel32.dll")]
+            public static extern int ResumeThread(IntPtr hThread);
+
+            [DllImport("kernel32.dll")]
+            public static extern IntPtr LoadLibraryA(string lpLibFileName);
+
+            [DllImport("kernel32.dll")]
+            public static extern uint GetThreadId(IntPtr hThread);
 
             [StructLayout(LayoutKind.Sequential)]
             public struct PROCESSENTRY32
@@ -239,6 +257,8 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
             {
                 Process[] procs = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(procname));
 
+                Debug.WriteLine(procs.Length);
+
                 if (procs.Length == 0)
                 {
                     return false;
@@ -250,6 +270,8 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
                 int procid = GetProcId(procname);
                 IntPtr hProc = OpenProcess(ProcessAccessFlags.All, false, proc.Id);
                 //
+
+                Debug.WriteLine(hProc);
 
                 if (proc.Handle != IntPtr.Zero)
                 {
@@ -277,11 +299,15 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
 
                     IntPtr hThread = CreateRemoteThread(proc.Handle, IntPtr.Zero, 0, loadlibAddy, loc, 0, out _);
 
+                    Debug.WriteLine("what");
 
                     if (!hThread.Equals(0))
                         //native method example
                         CloseHandle(hThread);
-                    else return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else return false;
 
@@ -291,50 +317,109 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
             }
         }
 
-        public static bool InjectDLL(string dllpath, Process process)
+        public static bool InjectDLL(string dllpath, Services.GameLaunchingService.PROCESS_INFORMATION ProcInfo)
         {
-            //redundant native method example - GetProcessesByName will automatically open a handle
-            int procid = process.Id;
-            IntPtr hProc = ghapi.OpenProcess(ghapi.ProcessAccessFlags.All, false, process.Id);
-            //
+            const int PROCESS_CREATE_THREAD = 0x0002;
+            const int PROCESS_QUERY_INFORMATION = 0x0400;
+            const int PROCESS_VM_OPERATION = 0x0008;
+            const int PROCESS_VM_WRITE = 0x0020;
+            const int PROCESS_VM_READ = 0x0010;
 
-            if (process.Handle != IntPtr.Zero)
-            {
-                //proc.Handle = managed
-                IntPtr loc = ghapi.VirtualAllocEx(process.Handle, IntPtr.Zero, ghapi.MAX_PATH, ghapi.AllocationType.Commit | ghapi.AllocationType.Reserve, ghapi.MemoryProtection.ReadWrite);
+            const uint MEM_COMMIT = 0x00001000;
+            const uint MEM_RESERVE = 0x00002000;
+            const uint PAGE_READWRITE = 4;
+            // the target process - I'm using a dummy process for this
+            // if you don't have one, open Task Manager and choose wisely
+            Process targetProcess = Process.GetProcessById((int)ProcInfo.dwProcessId);
 
-                if (loc.Equals(0))
-                {
-                    return false;
-                }
+            // geting the handle of the process - with required privileges
+            IntPtr procHandle = ghapi.OpenProcess((ghapi.ProcessAccessFlags)(PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ), false, targetProcess.Id);
 
-                IntPtr bytesRead = IntPtr.Zero;
+            // searching for the address of LoadLibraryA and storing it in a pointer
+            IntPtr loadLibraryAddr = ghapi.GetProcAddress(ghapi.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
-                bool result = ghapi.WriteProcessMemory(process.Handle, loc, dllpath.ToCharArray(), dllpath.Length, out bytesRead);
+            // name of the dll we want to inject
 
-                if (!result || bytesRead.Equals(0))
-                {
-                    return false;
-                }
+            // alocating some memory on the target process - enough to store the name of the dll
+            // and storing its address in a pointer
+            IntPtr allocMemAddress = ghapi.VirtualAllocEx(procHandle, IntPtr.Zero, (uint)((dllpath.Length + 1) * Marshal.SizeOf(typeof(char))), (ghapi.AllocationType)(MEM_COMMIT | MEM_RESERVE), (ghapi.MemoryProtection)PAGE_READWRITE);
 
-                IntPtr loadlibAddy = ghapi.GetProcAddress(ghapi.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-                //redundant native method example - MUST BE CASE SENSITIVE CORRECT
-                loadlibAddy = ghapi.GetProcAddress(ghapi.GetModuleBaseAddress(process.Id, "KERNEL32.DLL"), "LoadLibraryA");
+            // writing the name of the dll there
+            IntPtr bytesWritten;
+            ghapi.WriteProcessMemory(procHandle, allocMemAddress, Encoding.Default.GetBytes(dllpath), ((dllpath.Length + 1) * Marshal.SizeOf(typeof(char))), out bytesWritten);
 
-                IntPtr hThread = ghapi.CreateRemoteThread(process.Handle, IntPtr.Zero, 0, loadlibAddy, loc, 0, out _);
+            // creating a thread that will call LoadLibraryA with allocMemAddress as argument
+            ghapi.CreateRemoteThread(procHandle, IntPtr.Zero, 0, loadLibraryAddr, allocMemAddress, 0, out _);
 
+            ghapi.ResumeThread(ProcInfo.hThread);
 
-                if (!hThread.Equals(0))
-                {
-                    ghapi.CloseHandle(hThread);
-                }
-                else return false;
-            }
-            else return false;
-
-            //this will CloseHandle automatically using the managed method
-            process.Dispose();
             return true;
+
+
+            //IntPtr loc = ghapi.VirtualAllocEx(ProcInfo.hProcess, IntPtr.Zero, ghapi.MAX_PATH, ghapi.AllocationType.Commit | ghapi.AllocationType.Reserve, ghapi.MemoryProtection.ReadWrite);
+            //IntPtr loadlibAddy = ghapi.GetProcAddress(ghapi.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+
+            //if (ProcInfo.hThread == IntPtr.Zero)
+            //{
+            //    ProcInfo.hThread = ghapi.CreateRemoteThread(ProcInfo.hProcess, IntPtr.Zero, 0, loadlibAddy, loc, 0, out _);
+            //    ProcInfo.dwThreadId = ghapi.GetThreadId(ProcInfo.hThread);
+            //} 
+            //else
+            //{
+            //    ProcInfo.hThread = ghapi.CreateRemoteThread(ProcInfo.hProcess, IntPtr.Zero, 0, loadlibAddy, loc, 0, out _);
+            //}
+
+            //if(ProcInfo.hThread == IntPtr.Zero)
+            //{
+            //    ghapi.CloseHandle(ProcInfo.hProcess);
+            //    return false;
+            //}
+
+            //ghapi.ResumeThread(ProcInfo.hThread);
+
+            //return true;
+
+            ////redundant native method example - GetProcessesByName will automatically open a handle
+            //int procid = process.Id;
+            //IntPtr hProc = ghapi.OpenProcess(ghapi.ProcessAccessFlags.All, false, process.Id);
+
+            //if (process.Handle != IntPtr.Zero)
+            //{
+            //    //proc.Handle = managed
+            //    I
+
+            //    if (loc.Equals(0))
+            //    {
+            //        return false;
+            //    }
+
+            //    IntPtr bytesRead = IntPtr.Zero;
+
+            //    bool result = ghapi.WriteProcessMemory(process.Handle, loc, dllpath.ToCharArray(), dllpath.Length, out bytesRead);
+
+            //    if (!result || bytesRead.Equals(0))
+            //    {
+            //        return false;
+            //    }
+
+            //    IntPtr loadlibAddy = ghapi.GetProcAddress(ghapi.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            //    //redundant native method example - MUST BE CASE SENSITIVE CORRECT
+
+
+            //    IntPtr hThread = ghapi.CreateRemoteThread(process.Handle, IntPtr.Zero, 0, loadlibAddy, loc, 0, out _);
+
+            //    if(hThread == IntPtr.Zero)
+            //    {
+            //        process.Dispose();
+            //        return false;
+            //    }
+
+            //    ghapi.ResumeThread(hThread);                
+            //}
+            //else return false;
+
+            ////this will CloseHandle automatically using the managed method
+            //return true;
         }
     }
 }
