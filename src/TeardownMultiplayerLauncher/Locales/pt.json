@@ -9,8 +9,6 @@
         "teardown_invalid": "VERSÃO DESATUALIZADA DO TEARDOWN (requer {0})",
         "teardown_valid": "VERSÃO DO TEARDOWN ATUALIZADA",
         "select_teardown_dialog": "Selecione seu teardown.exe",
-        "injection_delay_title": "ATRASO DE INJEÇÃO",
-        "injection_delay_description": "Aumente isso se o seu jogo demora muito para carregar ou se ele está congelando muito cedo.",
         "seconds": "{0} Segundos",
         "play_button": "JOGAR",
         "updating_tdmp": "ATUALIZANDO TDMP",

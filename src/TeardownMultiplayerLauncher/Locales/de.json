@@ -9,8 +9,6 @@
         "teardown_invalid": "TEARDOWN VERSION NICHT UNTERSTÜZT (benötigt {0})",
         "teardown_valid": "TEARDOWN VERSION UNTERSTÜZT",
         "select_teardown_dialog": "Bitte wähle deine teardown.exe Datei aus",
-        "injection_delay_title": "INJEKTIONSVERZÖGERUNG",
-        "injection_delay_description": "Erhöhe diesen Wert, wenn das Spiel lange zum Laden benötigt und bei zu früher Injektion abstürzt.",
         "seconds": "{0} Sekunde(n)",
         "play_button": "SPIELEN",
         "updating_tdmp": "TDMP wird aktualisiert",

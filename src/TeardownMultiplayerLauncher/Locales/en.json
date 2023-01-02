@@ -9,8 +9,6 @@
         "teardown_invalid": "TEARDOWN VERSION UNSUPPORTED (requires {0})",
         "teardown_valid": "TEARDOWN VERSION SUPPORTED",
         "select_teardown_dialog": "Please select your teardown.exe",
-        "injection_delay_title": "INJECTION DELAY",
-        "injection_delay_description": "Increase this if your game takes a while to load and experiences crashes when injecting too early.",
         "seconds": "{0} Second(s)",
         "play_button": "PLAY",
         "updating_tdmp": "UPDATING TDMP",

@@ -9,8 +9,6 @@
         "teardown_invalid": "TEARDOWN 지원하지않는 (필요 {0})",
         "teardown_valid": "TEARDOWN 지원하는것",
         "select_teardown_dialog": "선택 teardown.exe",
-        "injection_delay_title": "기다리는시간",
-        "injection_delay_description": "게임의 최적화를 위해 잠시 기다려주세요",
         "seconds": "{0} 곧",
         "play_button": "시작",
         "updating_tdmp": "업데이트 TDMP",
