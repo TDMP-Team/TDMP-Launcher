@@ -2,11 +2,6 @@
 
 #include <Windows.h>
 #include <filesystem>
-#include <TlHelp32.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <regex>
 
 bool LaunchGame(
     PROCESS_INFORMATION* ProcInfo,
@@ -19,7 +14,7 @@ bool LaunchGame(
     return CreateProcessA(const_cast<LPSTR>(cExePath), nullptr, nullptr, nullptr, true, CREATE_DEFAULT_ERROR_MODE | CREATE_SUSPENDED, nullptr, cTeardownPath, &StartupInfo, ProcInfo);
 }
 
-extern "C" __declspec(dllexport) bool LaunchAndInject(const char* cTeardownPath) {
+extern "C" __declspec(dllexport) bool LaunchAndInjectAndWaitForGameToClose(const char* cTeardownPath) {
     char cDLLPath[MAX_PATH];
     char cExePath[MAX_PATH];
     PROCESS_INFORMATION ProcInfo;

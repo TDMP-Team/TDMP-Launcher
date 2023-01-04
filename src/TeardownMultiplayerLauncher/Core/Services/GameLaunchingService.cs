@@ -22,11 +22,7 @@ namespace TeardownMultiplayerLauncher.Core.Services
 
         public Task LaunchTeardownMultiplayerAsync()
         {
-            return Task.Run(() =>
-            {
-                LaunchAndInject();
-                WaitForGameToClose();
-            }).ContinueWith(task =>
+            return Task.Run(LaunchAndInjectAndWaitForGameToClose).ContinueWith(task =>
             {
                 if (task.IsFaulted)
                 {
@@ -35,31 +31,9 @@ namespace TeardownMultiplayerLauncher.Core.Services
             });
         }
 
-        private void WaitForGameToClose()
+        private void LaunchAndInjectAndWaitForGameToClose()
         {
-            for (var processSearchAttempt = 1; processSearchAttempt <= MaxProcessSearchAttempts; ++processSearchAttempt)
-            {
-                Thread.Sleep(ProcessSearchInterval); // Search interval.
-
-                var teardownProcessName = Path.GetFileNameWithoutExtension(_state.TeardownExePath);
-                var teardownProcess = Process.GetProcessesByName(teardownProcessName).FirstOrDefault();
-                if (teardownProcess == null)
-                {
-                    if (processSearchAttempt < MaxProcessSearchAttempts)
-                    {
-                        continue;
-                    }
-                    throw new Exception("Could not find running Teardown process");
-                }
-
-                teardownProcess.WaitForExit();
-                return;
-            }
-        }
-
-        private void LaunchAndInject()
-        {
-            if (!TeardownMultiplayerInjectionUtility.LaunchAndInject(PathUtility.GetTeardownDirectory(_state.TeardownExePath)))
+            if (!TeardownMultiplayerInjectionUtility.LaunchAndInjectAndWaitForGameToClose(PathUtility.GetTeardownDirectory(_state.TeardownExePath)))
             {
                 throw new Exception("Failed to inject TDMP");
             }

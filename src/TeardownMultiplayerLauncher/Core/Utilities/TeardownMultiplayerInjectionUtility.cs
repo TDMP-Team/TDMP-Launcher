@@ -7,6 +7,6 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
         private const string InjectorPath = "TeardownMultiplayerInjector.dll";
 
         [DllImport(InjectorPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool LaunchAndInject(string teardownDirectory);
+        public static extern bool LaunchAndInjectAndWaitForGameToClose(string teardownDirectory);
     }
 }
