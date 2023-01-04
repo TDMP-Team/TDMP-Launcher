@@ -11,7 +11,7 @@ bool LaunchGame(
     STARTUPINFOA StartupInfo;
     ZeroMemory(&StartupInfo, sizeof(StartupInfo));
     SetEnvironmentVariableA("SteamAppId", "1167630"); // Set SteamAppId var to initialize SteamAPI
-    return CreateProcessA(const_cast<LPSTR>(cExePath), nullptr, nullptr, nullptr, true, CREATE_DEFAULT_ERROR_MODE | CREATE_SUSPENDED, nullptr, cTeardownPath, &StartupInfo, ProcInfo);
+    return CreateProcessA(const_cast<LPSTR>(cExePath), nullptr, nullptr, nullptr, false, CREATE_DEFAULT_ERROR_MODE | CREATE_SUSPENDED, nullptr, cTeardownPath, &StartupInfo, ProcInfo);
 }
 
 extern "C" __declspec(dllexport) bool LaunchAndInjectAndWaitForGameToClose(const char* cTeardownPath) {
@@ -34,24 +34,6 @@ extern "C" __declspec(dllexport) bool LaunchAndInjectAndWaitForGameToClose(const
         return false;
     }
 
-    FILE* TeardownExe;
-    fopen_s(&TeardownExe, cExePath, "rb");
-    if (!TeardownExe) {
-        return false;
-    }
-
-    fseek(TeardownExe, 0, SEEK_END);
-    long lFileSize = ftell(TeardownExe);
-    rewind(TeardownExe);
-
-    void* pExeBuffer = malloc(lFileSize);
-    if (!pExeBuffer) {
-        return false;
-    }
-
-    fread(pExeBuffer, lFileSize, 1, TeardownExe);
-    fclose(TeardownExe);
-
     if (!LaunchGame(&ProcInfo, cExePath, cTeardownPath)) {
         return false;
     }
@@ -63,7 +45,7 @@ extern "C" __declspec(dllexport) bool LaunchAndInjectAndWaitForGameToClose(const
     const size_t dwDLLPath2Length = strlen(cDLLPath2);
 
     // Allocate memory for the DLL
-    const LPVOID pRemoteDLL = VirtualAllocEx(ProcInfo.hProcess, nullptr, dwDLLPath2Length + 1, MEM_COMMIT, PAGE_READWRITE);
+    const LPVOID pRemoteDLL = VirtualAllocEx(ProcInfo.hProcess, nullptr, dwDLLPath2Length + 1, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
     if (!pRemoteDLL) {
         return false;
     }
