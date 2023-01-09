@@ -111,7 +111,7 @@ namespace TeardownMultiplayerLauncher.Core
         public void OpenDiscordServer()
         {
             var appData = Environment.ExpandEnvironmentVariables("%localappdata%");
-            if (Directory.Exists(appData + "\\Discord")) {
+            if (Directory.Exists(appData + "\\Discord") || Directory.Exists(appData + "\\DiscordCanary") || Directory.Exists(appData + "\\DiscordPTB")) {
                 System.Diagnostics.Process.Start("explorer.exe", "discord:discord.gg/h8eSabqdA6");
             }
             else {
