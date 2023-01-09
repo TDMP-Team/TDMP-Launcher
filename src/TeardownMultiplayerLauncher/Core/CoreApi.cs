@@ -110,19 +110,7 @@ namespace TeardownMultiplayerLauncher.Core
 
         public void OpenDiscordServer()
         {
-            var appData = Environment.ExpandEnvironmentVariables("%localappdata%");
-            if (Directory.Exists(appData + "\\Discord") || Directory.Exists(appData + "\\DiscordCanary") || Directory.Exists(appData + "\\DiscordPTB")) {
-                System.Diagnostics.Process.Start("explorer.exe", "discord:discord.gg/h8eSabqdA6");
-            }
-            else {
-                Process.Start(
-                    new ProcessStartInfo("https://discord.gg/h8eSabqdA6")
-                    {
-                        UseShellExecute = true,
-                        Verb = "open",
-                    }
-                );
-            } 
+            DiscordUtility.OpenDiscordServer(_state.DiscordUrl);
         }
 
         public void OpenLauncherReleasePage()
