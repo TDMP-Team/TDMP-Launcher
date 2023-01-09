@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -109,13 +110,7 @@ namespace TeardownMultiplayerLauncher.Core
 
         public void OpenDiscordServer()
         {
-            Process.Start(
-                new ProcessStartInfo(_state.DiscordUrl)
-                {
-                    UseShellExecute = true,
-                    Verb = "open",
-                }
-            );
+            DiscordUtility.OpenDiscordServer(_state.DiscordUrl);
         }
 
         public void OpenLauncherReleasePage()
