@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -109,13 +110,19 @@ namespace TeardownMultiplayerLauncher.Core
 
         public void OpenDiscordServer()
         {
-            Process.Start(
-                new ProcessStartInfo(_state.DiscordUrl)
-                {
-                    UseShellExecute = true,
-                    Verb = "open",
-                }
-            );
+            var appData = Environment.ExpandEnvironmentVariables("%localappdata%");
+            if (Directory.Exists(appData + "\\Discord") || Directory.Exists(appData + "\\DiscordCanary") || Directory.Exists(appData + "\\DiscordPTB")) {
+                System.Diagnostics.Process.Start("explorer.exe", "discord:discord.gg/h8eSabqdA6");
+            }
+            else {
+                Process.Start(
+                    new ProcessStartInfo("https://discord.gg/h8eSabqdA6")
+                    {
+                        UseShellExecute = true,
+                        Verb = "open",
+                    }
+                );
+            } 
         }
 
         public void OpenLauncherReleasePage()
