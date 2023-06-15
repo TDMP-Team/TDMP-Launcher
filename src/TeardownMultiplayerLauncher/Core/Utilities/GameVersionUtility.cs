@@ -6,8 +6,8 @@ namespace TeardownMultiplayerLauncher.Core.Utilities
 {
     internal static class GameVersionUtility
     {
-        public static readonly string SupportedTeardownVersion = "1.3.0";
-        public static readonly string SupportedTeardownExeMd5Hash = "d42009cd563743bdb743d9bf268797e1";
+        public static readonly string SupportedTeardownVersion = "1.4.0";
+        public static readonly string SupportedTeardownExeMd5Hash = "92f62a1c46c45eb29c949af0262dcfcb";
 
         public static string? GetTeardownMd5Hash(string teardownExePath)
         {
