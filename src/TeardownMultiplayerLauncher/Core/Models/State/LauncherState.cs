@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Globalization;
 
 namespace TeardownMultiplayerLauncher.Core.Models.State
@@ -13,9 +12,6 @@ namespace TeardownMultiplayerLauncher.Core.Models.State
 
         [JsonProperty("discord_url")]
         public string DiscordUrl { get; set; } = "https://discord.gg/h8eSabqdA6";
-
-        [JsonProperty("injection_delay")]
-        public TimeSpan InjectionDelay { get; set; } = TimeSpan.FromSeconds(3);
 
         [JsonProperty("teardown_exe_path")]
         public string? TeardownExePath { get; set; }

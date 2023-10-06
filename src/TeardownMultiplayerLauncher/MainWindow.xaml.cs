@@ -57,11 +57,6 @@ namespace TeardownMultiplayerLauncher
             _teardownFolderBrowseButton.Content = _currentLocaleData.Strings.BrowseText;
             _teardownFolderTextBox.Content = _coreApi.GetTeardownExePath();
 
-            _injectionTitleLabel.Content = _currentLocaleData.Strings.InjectionTitleText;
-            _injectionDescriptionLabel.Content = _currentLocaleData.Strings.InjectionDescriptionText;
-            _injectionDelaySlider.Value = _coreApi.GetInjectionDelay().TotalSeconds;
-            _injectionDelayLabel.Content = string.Format(_currentLocaleData.Strings.SecondsText, _coreApi.GetInjectionDelay().TotalSeconds);
-
             _playButton.Content = _currentLocaleData.Strings.PlayButtonText;
             _playButton.IsEnabled = isGameVersionSupported == true;
 
@@ -146,12 +141,6 @@ namespace TeardownMultiplayerLauncher
         private void _discordGrid_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _coreApi.OpenDiscordServer();
-        }
-
-        private async void _injectionDelaySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            await _coreApi.SetInjectionDelayAsync(TimeSpan.FromSeconds(e.NewValue));
-            UpdateForm();
         }
 
         private async void _localeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

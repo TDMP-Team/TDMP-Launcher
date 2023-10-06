@@ -9,8 +9,6 @@
         "teardown_invalid": "不支持当前TEARDOWN版本（需要版本{0}）",
         "teardown_valid": "支持当前TEARDOWN版本",
         "select_teardown_dialog": "请选择您的teardown.exe",
-        "injection_delay_title": "注入延迟",
-        "injection_delay_description": "如果您的游戏启动时间过长，并因注入过早导致游戏崩溃，请考虑延长注入延迟。",
         "seconds": "{0}秒",
         "play_button": "开始",
         "updating_tdmp": "正在更新TDMP",

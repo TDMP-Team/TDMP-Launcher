@@ -9,8 +9,6 @@
         "teardown_invalid": "VERSION DE TEARDOWN NON SUPPORTÉE (Besoin de {0})",
         "teardown_valid": "VERSION DE TEARDOWN SUPPORTÉE",
         "select_teardown_dialog": "Merci de sélectionner votre teardown.exe",
-        "injection_delay_title": "TEMPS D'INJECTION",
-        "injection_delay_description": "Augmenter si votre jeu est long à charger ou crash avant la fin de l'injection.",
         "seconds": "{0} Seconde(s)",
         "play_button": "JOUER",
         "updating_tdmp": "MISE À JOUR DE TDMP EN COURS",

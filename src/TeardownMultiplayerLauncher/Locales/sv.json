@@ -9,8 +9,6 @@
         "teardown_invalid": "TEARDOWNS VERSION STÖDS INTE (kräver {0})",
         "teardown_valid": "TEARDOWNS VERSION STÖDS",
         "select_teardown_dialog": "Välj din teardown.exe",
-        "injection_delay_title": "INJEKTIONSFÖRSENING",
-        "injection_delay_description": "Öka detta om ditt spel tar ett tag att ladda och upplever kraschar när du injicerar för tidigt.",
         "seconds": "{0} Sekunder",
         "play_button": "SPELA",
         "updating_tdmp": "UPDATERAR TDMP",

@@ -9,8 +9,6 @@
         "teardown_invalid": "WYBRANA WERSJA TEARDOWN NIE JEST OBSŁUGIWANA (wymagana {0})",
         "teardown_valid": "WYBRANA WERSJA TEARDOWN JEST OBSŁUGIWANA",
         "select_teardown_dialog": "Wybierz teardown.exe",
-        "injection_delay_title": "OPÓŹNIENIE WSTRZYKIWANIA",
-        "injection_delay_description": "Zwiększ jeżeli gra włącza się dłużej lub występują zawieszenia przez wsktrzyknięcie zbyt wcześnie\\późno.",
         "seconds": "{0} Sekund(y)",
         "play_button": "GRAJ",
         "updating_tdmp": "AKTUALIZOWANIE TDMP",

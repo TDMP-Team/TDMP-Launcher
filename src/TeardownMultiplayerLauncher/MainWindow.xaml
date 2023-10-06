@@ -42,13 +42,6 @@
                             <Label x:Name="_teardownFolderTextBox" Margin="10,0,0,0" VerticalContentAlignment="Center" />
                         </StackPanel>
 
-                        <Label x:Name="_injectionTitleLabel" Content="INJECTION DELAY" FontWeight="Bold" Padding="0,15,0,0"/>
-                        <Label x:Name="_injectionDescriptionLabel" Content="Increase this if your game takes a while to load and experiences crashes when injecting too early." Margin="0,0,0,10" Foreground="{DynamicResource MaterialDesignBodyLight}" VerticalContentAlignment="Center" Padding="0,0,0,0" FontSize="10"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,00,0,0">
-                            <Slider x:Name="_injectionDelaySlider" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" ValueChanged="_injectionDelaySlider_ValueChanged" IsSnapToTickEnabled="True" Maximum="60" SmallChange="1"/>
-                            <Label x:Name="_injectionDelayLabel" Content="X Seconds" VerticalContentAlignment="Center"/>
-                        </StackPanel>
-
                         <Button x:Name="_playButton" Content="PLAY" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="35" Height="50" Margin="0,20,0,10" Click="_playButton_Click" IsEnabled="False"/>
                     </StackPanel>
                 </Grid>

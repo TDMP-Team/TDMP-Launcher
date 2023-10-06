@@ -9,8 +9,6 @@
         "teardown_invalid": "TEARDOWN SÜRÜMÜ DESTEKLENMİYOR (gerekli sürüm {0})",
         "teardown_valid": "TEARDOWN SÜRÜMÜ DESTEKLENİYOR",
         "select_teardown_dialog": "Lütfen teardown.exe dosyanızı seçin",
-        "injection_delay_title": "ENJEKSİYON GECİKMESİ",
-        "injection_delay_description": "Oyununuz açılması çok uzun sürüyorsa ve mod enjekte edilirken oyunda çökme yaşıyorsanız, bu gecikme değerini arttırın.",
         "seconds": "{0} Saniye",
         "play_button": "OYNA",
         "updating_tdmp": "TDMP GÜNCELLENİYOR",
